@@ -5,7 +5,7 @@ import { useUnits, useLessons } from '@/hooks/useUnits';
 import { useUserProgress } from '@/hooks/useProgress';
 import { UnitCard } from '@/components/UnitCard';
 import { StreakWidget } from '@/components/StreakWidget';
-import { AdSlot } from '@/components/AdSlot';
+
 import Header from '@/components/Header';
 
 const Learn = () => {
@@ -55,8 +55,6 @@ const Learn = () => {
           className="mb-6"
         />
 
-        {/* Ad Slot */}
-        {!profile?.is_premium && <AdSlot variant="banner" className="mb-6" />}
 
         {/* Units List */}
         <h2 className="text-xl font-bold mb-4">وحدات التعلم</h2>

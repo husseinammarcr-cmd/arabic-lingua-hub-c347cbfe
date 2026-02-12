@@ -23,7 +23,7 @@ import { TiltCard } from '@/components/animations/TiltCard';
 import { AnimatedProgress } from '@/components/animations/AnimatedProgress';
 import { usePrefersReducedMotion } from '@/hooks/useAnimations';
 import { useUserProgress, isLevelUnlocked, getLevelIndex } from '@/hooks/useProgress';
-import { AclibBanner } from '@/components/AclibBanner';
+
 
 // Static Course JSON-LD schema for SEO
 const COURSE_SCHEMA = {
@@ -271,8 +271,6 @@ const AppCourses = () => {
           </div>
         </FadeUp>
 
-        {/* Ad Banner */}
-        <AclibBanner className="mb-6" />
 
         {/* Levels Grid */}
         <StaggerContainer className="grid gap-6 md:grid-cols-2">

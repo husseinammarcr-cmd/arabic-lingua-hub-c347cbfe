@@ -51,7 +51,7 @@ import { useEffect, useMemo } from 'react';
 import PageBackground from '@/components/PageBackground';
 import Header from '@/components/Header';
 import { useUserProgress, getUnitProgress } from '@/hooks/useProgress';
-import { AclibBanner } from '@/components/AclibBanner';
+
 
 const SITE_URL = 'https://lingoarab.com';
 
@@ -327,8 +327,6 @@ const CourseLevel = () => {
           <p className="text-sm text-muted-foreground mt-2">{level.descriptionAr}</p>
         </div>
 
-        {/* Ad Banner */}
-        <AclibBanner className="mb-6" />
 
         {/* Units List */}
         <div className="space-y-4">
