@@ -5,7 +5,6 @@ import { useUnits, useLessons } from '@/hooks/useUnits';
 import { useUserProgress } from '@/hooks/useProgress';
 import { UnitCard } from '@/components/UnitCard';
 import { StreakWidget } from '@/components/StreakWidget';
-
 import Header from '@/components/Header';
 
 const Learn = () => {
@@ -37,27 +36,17 @@ const Learn = () => {
   if (authLoading || unitsLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
-        <div className="animate-pulse text-primary text-xl">جاري التحميل...</div>
+        <div className="animate-pulse text-primary text-xl">Loading...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-hero" dir="rtl">
-      {/* Header */}
+    <div className="min-h-screen bg-gradient-hero">
       <Header showUserInfo />
-
       <main className="container mx-auto px-4 py-6 max-w-2xl">
-        {/* Streak Widget */}
-        <StreakWidget 
-          currentStreak={profile?.streak_count || 0} 
-          lastStudyDate={profile?.last_study_date}
-          className="mb-6"
-        />
-
-
-        {/* Units List */}
-        <h2 className="text-xl font-bold mb-4">وحدات التعلم</h2>
+        <StreakWidget currentStreak={profile?.streak_count || 0} lastStudyDate={profile?.last_study_date} className="mb-6" />
+        <h2 className="text-xl font-bold mb-4">Learning Units</h2>
         <div className="space-y-4">
           {units?.map((unit, index) => (
             <UnitCard

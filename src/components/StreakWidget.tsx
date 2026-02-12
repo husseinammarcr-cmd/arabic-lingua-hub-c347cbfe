@@ -22,7 +22,7 @@ export const StreakWidget = ({
     date.setDate(date.getDate() - (6 - i));
     return {
       date: date.toISOString().split('T')[0],
-      dayName: date.toLocaleDateString('ar-SA', { weekday: 'short' }),
+      dayName: date.toLocaleDateString('en-GB', { weekday: 'short' }),
       isToday: i === 6,
       // Simple logic: mark as active if within streak range
       isActive: lastStudyDate && i >= 7 - currentStreak
@@ -44,7 +44,7 @@ export const StreakWidget = ({
           </div>
           <div>
             <span className="text-2xl font-bold">{currentStreak}</span>
-            <span className="text-muted-foreground text-base mr-2">يوم متتالي</span>
+            <span className="text-muted-foreground text-base ml-2">day streak</span>
           </div>
         </CardTitle>
       </CardHeader>
@@ -77,15 +77,9 @@ export const StreakWidget = ({
 
         {/* Motivation text */}
         <p className="text-center text-sm text-muted-foreground mt-4">
-          {!isActiveToday && currentStreak > 0 && (
-            "تعلّم اليوم للحفاظ على سلسلتك! 🔥"
-          )}
-          {isActiveToday && (
-            "أحسنت! واصل التعلم غداً 💪"
-          )}
-          {currentStreak === 0 && (
-            "ابدأ سلسلة جديدة اليوم! 🌟"
-          )}
+          {!isActiveToday && currentStreak > 0 && "Study today to keep your streak! 🔥"}
+          {isActiveToday && "Well done! Keep learning tomorrow 💪"}
+          {currentStreak === 0 && "Start a new streak today! 🌟"}
         </p>
       </CardContent>
     </Card>

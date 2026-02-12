@@ -70,7 +70,7 @@ const FeatureCard = ({ icon, title, description, delay }: { icon: React.ReactNod
 const About = () => {
   return (
     <PageBackground>
-      <div className="min-h-screen" dir="rtl">
+      <div className="min-h-screen">
         <Header showAuthButton />
         
         <main className="container mx-auto px-4 py-12 md:py-20">
@@ -86,37 +86,37 @@ const About = () => {
               transition={{ duration: 0.6 }}
               className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6"
             >
-              من نحن
+              About Us
             </motion.h1>
             <motion.p 
               variants={fadeUpVariants}
               transition={{ duration: 0.6, delay: 0.1 }}
               className="text-xl md:text-2xl text-muted-foreground leading-relaxed"
             >
-              منصة تعليمية متكاملة تهدف إلى تمكين الناطقين بالعربية من إتقان اللغة الإنجليزية بأسلوب سهل وممتع
+              A comprehensive learning platform designed to help British English speakers master Spanish in an easy and enjoyable way
             </motion.p>
           </motion.div>
 
           {/* Main Content */}
           <div className="max-w-4xl mx-auto">
             {/* Who We Are */}
-            <Section title="من نحن" icon={<Users className="w-5 h-5" />}>
+            <Section title="Who We Are" icon={<Users className="w-5 h-5" />}>
               <p>
-                نحن فريق من المتخصصين في تعليم اللغات والتكنولوجيا التعليمية، نؤمن بأن تعلم اللغة الإنجليزية يجب أن يكون متاحاً للجميع بطريقة سهلة وفعّالة. أسسنا هذه المنصة لنقدم تجربة تعليمية فريدة تراعي خصوصية المتعلم العربي وتحترم ثقافته.
+                We are a team of language teaching and educational technology specialists who believe that learning Spanish should be accessible to everyone in an easy and effective way. We founded this platform to deliver a unique learning experience tailored for English speakers.
               </p>
             </Section>
 
             {/* Our Vision */}
-            <Section title="رؤيتنا" icon={<Eye className="w-5 h-5" />} delay={0.1}>
+            <Section title="Our Vision" icon={<Eye className="w-5 h-5" />} delay={0.1}>
               <p>
-                نسعى لأن نكون المنصة الأولى والأكثر موثوقية لتعليم اللغة الإنجليزية للناطقين بالعربية في العالم العربي، من خلال توفير محتوى تعليمي عالي الجودة يجمع بين الأساليب الحديثة والتقنيات المتطورة.
+                We strive to be the leading and most trusted platform for teaching Spanish to English speakers, by providing high-quality educational content that combines modern methods with cutting-edge technology.
               </p>
             </Section>
 
             {/* Our Mission */}
-            <Section title="مهمتنا" icon={<Target className="w-5 h-5" />} delay={0.2}>
+            <Section title="Our Mission" icon={<Target className="w-5 h-5" />} delay={0.2}>
               <p>
-                تمكين الملايين من المتعلمين العرب من إتقان اللغة الإنجليزية وفتح آفاق جديدة أمامهم في التعليم والعمل والتواصل مع العالم. نعمل على تقديم دروس تفاعلية ومحتوى مخصص يناسب جميع المستويات والأعمار.
+                Empowering millions of learners to master Spanish and open new horizons in education, work, and global communication. We deliver interactive lessons and customised content suited to all levels and ages.
               </p>
             </Section>
 
@@ -133,55 +133,55 @@ const About = () => {
                 <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
                   <Award className="w-5 h-5" />
                 </div>
-                <h2 className="text-2xl md:text-3xl font-bold text-foreground">لماذا تختارنا؟</h2>
+                <h2 className="text-2xl md:text-3xl font-bold text-foreground">Why Choose Us?</h2>
               </div>
               
               <div className="grid md:grid-cols-2 gap-6">
                 <FeatureCard
                   icon={<BookOpen className="w-6 h-6" />}
-                  title="محتوى مخصص للعرب"
-                  description="دروس مصممة خصيصاً للناطقين بالعربية، تراعي التحديات اللغوية الشائعة وتقدم شروحات واضحة بالعربية."
+                  title="Content for English Speakers"
+                  description="Lessons designed specifically for British English speakers, addressing common language challenges with clear explanations."
                   delay={0.4}
                 />
                 <FeatureCard
                   icon={<Target className="w-6 h-6" />}
-                  title="تعلم تفاعلي"
-                  description="تمارين متنوعة وألعاب تعليمية تجعل التعلم ممتعاً وفعالاً، مع تتبع تقدمك خطوة بخطوة."
+                  title="Interactive Learning"
+                  description="Diverse exercises and educational games that make learning fun and effective, with step-by-step progress tracking."
                   delay={0.5}
                 />
                 <FeatureCard
                   icon={<Award className="w-6 h-6" />}
-                  title="نظام مكافآت محفز"
-                  description="اكسب نقاط XP وشارات إنجاز مع كل درس تكمله، وتنافس مع متعلمين آخرين على لوحة المتصدرين."
+                  title="Motivating Rewards System"
+                  description="Earn XP points and achievement badges with every lesson you complete, and compete with other learners on the leaderboard."
                   delay={0.6}
                 />
                 <FeatureCard
                   icon={<Heart className="w-6 h-6" />}
-                  title="مجاني ومتاح للجميع"
-                  description="نؤمن بأن التعليم حق للجميع، لذلك نوفر معظم محتوانا مجاناً لجميع المتعلمين."
+                  title="Free for Everyone"
+                  description="We believe education is a right for all, so we provide most of our content free of charge to all learners."
                   delay={0.7}
                 />
               </div>
             </motion.div>
 
             {/* Who Is This For */}
-            <Section title="لمن هذه المنصة؟" icon={<Users className="w-5 h-5" />} delay={0.4}>
+            <Section title="Who Is This Platform For?" icon={<Users className="w-5 h-5" />} delay={0.4}>
               <ul className="space-y-3 list-none">
                 <li className="flex items-start gap-3">
                   <span className="w-2 h-2 rounded-full bg-primary mt-2.5 flex-shrink-0"></span>
-                  <span>الطلاب الراغبين في تحسين مستواهم الأكاديمي في اللغة الإنجليزية</span>
+                  <span>Students looking to improve their academic level in Spanish</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="w-2 h-2 rounded-full bg-primary mt-2.5 flex-shrink-0"></span>
-                  <span>المهنيون الباحثون عن فرص عمل أفضل تتطلب إتقان الإنجليزية</span>
+                  <span>Professionals seeking better career opportunities that require Spanish proficiency</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="w-2 h-2 rounded-full bg-primary mt-2.5 flex-shrink-0"></span>
-                  <span>المبتدئون الذين يرغبون في بدء رحلة تعلم الإنجليزية من الصفر</span>
+                  <span>Beginners who want to start their Spanish learning journey from scratch</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="w-2 h-2 rounded-full bg-primary mt-2.5 flex-shrink-0"></span>
-                  <span>أي شخص يسعى لتطوير مهاراته اللغوية بطريقة ممتعة ومنظمة</span>
+                  <span>Anyone looking to develop their language skills in a fun and structured way</span>
                 </li>
               </ul>
             </Section>
@@ -196,16 +196,16 @@ const About = () => {
               className="text-center bg-gradient-to-br from-primary/10 via-accent/5 to-transparent rounded-3xl p-8 md:p-12 border border-border/50"
             >
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-                ابدأ رحلتك التعليمية اليوم
+                Start Your Learning Journey Today
               </h2>
               <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-                انضم إلى آلاف المتعلمين الذين يطورون مهاراتهم في اللغة الإنجليزية معنا كل يوم
+                Join thousands of learners who are developing their Spanish skills with us every day
               </p>
               <a 
                 href="/auth" 
                 className="inline-flex items-center justify-center px-8 py-3 bg-primary text-primary-foreground rounded-full font-bold hover:opacity-90 transition-opacity"
               >
-                سجّل الآن مجاناً
+                Sign Up for Free
               </a>
             </motion.div>
           </div>
@@ -214,7 +214,7 @@ const About = () => {
         {/* Footer */}
         <footer className="border-t border-border/50 py-8 mt-16">
           <div className="container mx-auto px-4 text-center text-muted-foreground">
-            <p>© {new Date().getFullYear()} LingoArab. جميع الحقوق محفوظة.</p>
+            <p>© {new Date().getFullYear()} Lingo Spanish. All rights reserved.</p>
           </div>
         </footer>
       </div>
