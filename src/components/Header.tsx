@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useRef } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
-import { Star, LogOut, ChevronLeft, Shield, Menu } from 'lucide-react';
+import { Star, LogOut, ChevronRight, Shield, Menu } from 'lucide-react';
 import { NotificationBell } from '@/components/NotificationBell';
 import EmailVerificationBanner from '@/components/EmailVerificationBanner';
 import ThemeToggle from '@/components/ThemeToggle';
@@ -28,13 +28,13 @@ const Header = ({ showBack = false, showUserInfo = false, showAuthButton = false
         <div className="flex items-center gap-3">
           {showBack && (
             <Button variant="ghost" size="icon" onClick={() => navigate(-1)}>
-              <ChevronLeft className="w-5 h-5 rotate-180" />
+              <ChevronRight className="w-5 h-5 rotate-180" />
             </Button>
           )}
           <a href="/" className="flex items-center flex-shrink-0">
             <img 
               src={logo} 
-              alt="LingoArab Logo" 
+              alt="LingoSpanish Logo" 
               className="h-16 sm:h-14 md:h-10 w-auto -my-3 md:-my-1"
             />
           </a>
@@ -42,7 +42,7 @@ const Header = ({ showBack = false, showUserInfo = false, showAuthButton = false
             href="/about" 
             className="text-muted-foreground hover:text-foreground transition-colors font-medium hidden sm:block"
           >
-            من نحن
+            About
           </a>
         </div>
         
@@ -53,7 +53,6 @@ const Header = ({ showBack = false, showUserInfo = false, showAuthButton = false
                 <Star className="w-4 h-4 fill-current" />
                 <span>{profile.xp || 0}</span>
               </div>
-              
             </>
           )}
           
@@ -80,13 +79,13 @@ const Header = ({ showBack = false, showUserInfo = false, showAuthButton = false
           
           {showAuthButton && !user && (
             <Button variant="outline" onClick={() => navigate('/auth')}>
-              تسجيل الدخول
+              Sign In
             </Button>
           )}
           
           {showAuthButton && user && (
             <Button variant="default" onClick={() => navigate('/app/courses')}>
-              تابع التعلم
+              Continue Learning
             </Button>
           )}
           

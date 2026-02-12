@@ -25,7 +25,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 interface NavItem {
   label: string;
-  labelAr: string;
   href: string;
   icon: React.ReactNode;
   requiresAuth?: boolean;
@@ -33,26 +32,26 @@ interface NavItem {
 }
 
 const publicNavItems: NavItem[] = [
-  { label: 'Home', labelAr: 'الرئيسية', href: '/', icon: <Home className="w-5 h-5" /> },
-  { label: 'Free Lessons', labelAr: 'دروس مجانية', href: '/free-lessons', icon: <GraduationCap className="w-5 h-5" /> },
-  { label: 'Courses', labelAr: 'الدورات', href: '/courses', icon: <BookOpen className="w-5 h-5" /> },
-  { label: 'Levels', labelAr: 'المستويات', href: '/learn', icon: <Layers className="w-5 h-5" /> },
-  { label: 'Blog', labelAr: 'المدونة', href: '/blog', icon: <FileText className="w-5 h-5" /> },
-  { label: 'About', labelAr: 'من نحن', href: '/about', icon: <Info className="w-5 h-5" /> },
-  { label: 'FAQ', labelAr: 'الأسئلة الشائعة', href: '/faq', icon: <HelpCircle className="w-5 h-5" /> },
-  { label: 'Contact', labelAr: 'تواصل معنا', href: '/contact', icon: <MessageSquare className="w-5 h-5" /> },
+  { label: 'Home', href: '/', icon: <Home className="w-5 h-5" /> },
+  { label: 'Free Lessons', href: '/free-lessons', icon: <GraduationCap className="w-5 h-5" /> },
+  { label: 'Courses', href: '/courses', icon: <BookOpen className="w-5 h-5" /> },
+  { label: 'Levels', href: '/learn', icon: <Layers className="w-5 h-5" /> },
+  { label: 'Blog', href: '/blog', icon: <FileText className="w-5 h-5" /> },
+  { label: 'About', href: '/about', icon: <Info className="w-5 h-5" /> },
+  { label: 'FAQ', href: '/faq', icon: <HelpCircle className="w-5 h-5" /> },
+  { label: 'Contact', href: '/contact', icon: <MessageSquare className="w-5 h-5" /> },
 ];
 
 const authNavItems: NavItem[] = [
-  { label: 'Dashboard', labelAr: 'لوحة التحكم', href: '/app/courses', icon: <LayoutDashboard className="w-5 h-5" />, requiresAuth: true },
-  { label: 'Profile', labelAr: 'الملف الشخصي', href: '/profile', icon: <User className="w-5 h-5" />, requiresAuth: true },
-  { label: 'Certificate', labelAr: 'الشهادة', href: '/certificate', icon: <Award className="w-5 h-5" />, requiresAuth: true },
-  { label: 'Settings', labelAr: 'الإعدادات', href: '/settings', icon: <Settings className="w-5 h-5" />, requiresAuth: true },
+  { label: 'Dashboard', href: '/app/courses', icon: <LayoutDashboard className="w-5 h-5" />, requiresAuth: true },
+  { label: 'Profile', href: '/profile', icon: <User className="w-5 h-5" />, requiresAuth: true },
+  { label: 'Certificate', href: '/certificate', icon: <Award className="w-5 h-5" />, requiresAuth: true },
+  { label: 'Settings', href: '/settings', icon: <Settings className="w-5 h-5" />, requiresAuth: true },
 ];
 
 const guestNavItems: NavItem[] = [
-  { label: 'Login', labelAr: 'تسجيل الدخول', href: '/auth', icon: <LogIn className="w-5 h-5" />, hideWhenAuth: true },
-  { label: 'Sign Up', labelAr: 'إنشاء حساب', href: '/auth?mode=signup', icon: <UserPlus className="w-5 h-5" />, hideWhenAuth: true },
+  { label: 'Login', href: '/auth', icon: <LogIn className="w-5 h-5" />, hideWhenAuth: true },
+  { label: 'Sign Up', href: '/auth?mode=signup', icon: <UserPlus className="w-5 h-5" />, hideWhenAuth: true },
 ];
 
 export interface SidebarNavRef {
@@ -69,12 +68,10 @@ const SidebarNav = forwardRef<SidebarNavRef>((_, ref) => {
     open: () => setIsOpen(true),
   }));
 
-  // Close sidebar on route change
   useEffect(() => {
     setIsOpen(false);
   }, [location.pathname]);
 
-  // Prevent body scroll when sidebar is open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -87,7 +84,6 @@ const SidebarNav = forwardRef<SidebarNavRef>((_, ref) => {
   }, [isOpen]);
 
   const handleNavClick = (href: string) => {
-    // Redirect authenticated users to /app/courses for courses and levels pages
     if (user && (href === '/courses' || href === '/learn')) {
       navigate('/app/courses');
     } else {
@@ -109,10 +105,6 @@ const SidebarNav = forwardRef<SidebarNavRef>((_, ref) => {
 
   return (
     <>
-      {/* Menu Button - rendered externally via renderTrigger or standalone */}
-      
-
-      {/* Overlay */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -127,7 +119,6 @@ const SidebarNav = forwardRef<SidebarNavRef>((_, ref) => {
         )}
       </AnimatePresence>
 
-      {/* Sidebar */}
       <AnimatePresence>
         {isOpen && (
           <motion.aside
@@ -144,9 +135,8 @@ const SidebarNav = forwardRef<SidebarNavRef>((_, ref) => {
             aria-modal="true"
             aria-label="Navigation menu"
           >
-            {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-border">
-              <h2 className="text-lg font-bold text-foreground">القائمة</h2>
+              <h2 className="text-lg font-bold text-foreground">Menu</h2>
               <button
                 onClick={() => setIsOpen(false)}
                 className={cn(
@@ -159,19 +149,17 @@ const SidebarNav = forwardRef<SidebarNavRef>((_, ref) => {
               </button>
             </div>
 
-            {/* Navigation Links */}
             <nav className="flex-1 overflow-y-auto p-4 space-y-2">
-              {/* Main Navigation */}
               <div className="space-y-1">
                 <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider px-3 py-2">
-                  التنقل
+                  Navigation
                 </p>
                 {publicNavItems.map((item) => (
                   <button
                     key={item.href}
                     onClick={() => handleNavClick(item.href)}
                     className={cn(
-                      "w-full flex items-center gap-3 px-3 py-3 rounded-xl text-right",
+                      "w-full flex items-center gap-3 px-3 py-3 rounded-xl text-left",
                       "transition-all duration-200",
                       isActive(item.href)
                         ? "bg-primary/10 text-primary font-medium"
@@ -184,23 +172,22 @@ const SidebarNav = forwardRef<SidebarNavRef>((_, ref) => {
                     )}>
                       {item.icon}
                     </span>
-                    <span className="flex-1">{item.labelAr}</span>
+                    <span className="flex-1">{item.label}</span>
                   </button>
                 ))}
               </div>
 
-              {/* Auth-specific Navigation */}
               {user ? (
                 <div className="space-y-1 pt-4 border-t border-border mt-4">
                   <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider px-3 py-2">
-                    حسابي
+                    My Account
                   </p>
                   {authNavItems.map((item) => (
                     <button
                       key={item.href}
                       onClick={() => handleNavClick(item.href)}
                       className={cn(
-                        "w-full flex items-center gap-3 px-3 py-3 rounded-xl text-right",
+                        "w-full flex items-center gap-3 px-3 py-3 rounded-xl text-left",
                         "transition-all duration-200",
                         isActive(item.href)
                           ? "bg-primary/10 text-primary font-medium"
@@ -213,35 +200,34 @@ const SidebarNav = forwardRef<SidebarNavRef>((_, ref) => {
                       )}>
                         {item.icon}
                       </span>
-                      <span className="flex-1">{item.labelAr}</span>
+                      <span className="flex-1">{item.label}</span>
                     </button>
                   ))}
                   
-                  {/* Logout Button */}
                   <button
                     onClick={handleLogout}
                     className={cn(
-                      "w-full flex items-center gap-3 px-3 py-3 rounded-xl text-right",
+                      "w-full flex items-center gap-3 px-3 py-3 rounded-xl text-left",
                       "text-destructive hover:bg-destructive/10 transition-all duration-200"
                     )}
                   >
                     <span className="p-2 rounded-lg bg-destructive/10">
                       <LogOut className="w-5 h-5" />
                     </span>
-                    <span className="flex-1">تسجيل الخروج</span>
+                    <span className="flex-1">Log Out</span>
                   </button>
                 </div>
               ) : (
                 <div className="space-y-1 pt-4 border-t border-border mt-4">
                   <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider px-3 py-2">
-                    الحساب
+                    Account
                   </p>
                   {guestNavItems.map((item) => (
                     <button
                       key={item.href}
                       onClick={() => handleNavClick(item.href)}
                       className={cn(
-                        "w-full flex items-center gap-3 px-3 py-3 rounded-xl text-right",
+                        "w-full flex items-center gap-3 px-3 py-3 rounded-xl text-left",
                         "transition-all duration-200",
                         "text-foreground hover:bg-muted"
                       )}
@@ -249,17 +235,16 @@ const SidebarNav = forwardRef<SidebarNavRef>((_, ref) => {
                       <span className="p-2 rounded-lg bg-muted">
                         {item.icon}
                       </span>
-                      <span className="flex-1">{item.labelAr}</span>
+                      <span className="flex-1">{item.label}</span>
                     </button>
                   ))}
                 </div>
               )}
             </nav>
 
-            {/* Footer */}
             <div className="p-4 border-t border-border">
               <p className="text-xs text-muted-foreground text-center">
-                LingoArab © {new Date().getFullYear()}
+                LingoSpanish © {new Date().getFullYear()}
               </p>
             </div>
           </motion.aside>
