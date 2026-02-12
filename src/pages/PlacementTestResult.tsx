@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { 
-  ChevronLeft, 
+  ChevronRight, 
   Award,
   Trophy,
   Star,
@@ -57,7 +57,6 @@ const PlacementTestResult = () => {
   
   const state = location.state as LocationState | null;
   
-  // If no state, use profile data
   const score = state?.score ?? profile?.placement_score ?? 0;
   const total = state?.total ?? 30;
   const level = (state?.level ?? profile?.placement_level ?? 'A1') as 'A1' | 'A2' | 'B1' | 'B2';
@@ -76,7 +75,7 @@ const PlacementTestResult = () => {
   }, [isLoading, profile, state, navigate]);
 
   const handleShare = async () => {
-    const text = `حصلت على مستوى ${level} (${levelInfo.title}) في اختبار تحديد المستوى على LingoArab! 🎉`;
+    const text = `I scored ${level} (${levelInfo.title}) on the Lingo Spanish placement test! 🎉`;
     
     if (navigator.share) {
       try {
@@ -86,53 +85,49 @@ const PlacementTestResult = () => {
       }
     } else {
       await navigator.clipboard.writeText(text);
-      toast.success('تم نسخ النتيجة!');
+      toast.success('Result copied!');
     }
   };
 
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
-        <div className="animate-pulse text-primary text-xl">جاري التحميل...</div>
+        <div className="animate-pulse text-primary text-xl">Loading...</div>
       </div>
     );
   }
 
   return (
     <PageBackground>
-      <div className="min-h-screen" dir="rtl">
-        {/* Header */}
+      <div className="min-h-screen">
         <Header />
 
         <main className="container mx-auto px-4 py-8 max-w-2xl">
-          {/* Congratulations */}
           <div className="text-center mb-8">
             <div className="inline-flex items-center justify-center w-20 h-20 mb-4 animate-bounce-in">
               <Award className="w-20 h-20 text-accent" />
             </div>
-            <h2 className="text-3xl font-bold text-foreground mb-2">🎉 مبروك!</h2>
-            <p className="text-muted-foreground">أكملت اختبار تحديد المستوى بنجاح</p>
+            <h2 className="text-3xl font-bold text-foreground mb-2">🎉 Congratulations!</h2>
+            <p className="text-muted-foreground">You've completed the placement test successfully</p>
           </div>
 
-          {/* Level Result Card */}
           <Card className={cn("mb-6 overflow-hidden border-2", `border-${level === 'A1' ? 'emerald' : level === 'A2' ? 'sky' : level === 'B1' ? 'violet' : 'amber'}-500/30`)}>
             <div className={cn("h-3 bg-gradient-to-r", colors.gradient)} />
             <CardContent className="p-6 text-center">
               <div className={cn("w-24 h-24 mx-auto mb-4 rounded-2xl bg-gradient-to-br flex items-center justify-center", colors.gradient)}>
                 <IconComponent className="w-12 h-12 text-white" />
               </div>
-              <div className="text-sm text-muted-foreground mb-1">مستواك هو</div>
+              <div className="text-sm text-muted-foreground mb-1">Your level is</div>
               <div className="text-5xl font-bold text-foreground mb-2">{level}</div>
               <div className={cn("text-xl font-semibold mb-1", colors.text)}>{levelInfo.title}</div>
-              <div className="text-muted-foreground ltr-text">{levelInfo.subtitle}</div>
+              <div className="text-muted-foreground">{levelInfo.subtitle}</div>
             </CardContent>
           </Card>
 
-          {/* Score Card */}
           <Card className="mb-6">
             <CardContent className="p-6">
               <div className="flex items-center justify-between mb-4">
-                <span className="text-muted-foreground">النتيجة</span>
+                <span className="text-muted-foreground">Score</span>
                 <div className="text-2xl font-bold text-foreground">
                   <span className="text-primary">{score}</span>
                   <span className="text-muted-foreground">/{total}</span>
@@ -143,16 +138,14 @@ const PlacementTestResult = () => {
             </CardContent>
           </Card>
 
-          {/* Breakdown */}
           {breakdown && (
             <Card className="mb-6">
               <CardContent className="p-6">
-                <h3 className="font-bold text-foreground mb-4">تفاصيل الأداء</h3>
+                <h3 className="font-bold text-foreground mb-4">Performance Breakdown</h3>
                 <div className="space-y-3">
                   {(['A1', 'A2', 'B1', 'B2'] as const).map((lvl) => {
                     const data = breakdown[lvl];
                     const lvlPercentage = data.total > 0 ? (data.correct / data.total) * 100 : 0;
-                    const lvlColors = levelColors[lvl];
                     
                     return (
                       <div key={lvl} className="flex items-center gap-3">
@@ -186,20 +179,18 @@ const PlacementTestResult = () => {
             </Card>
           )}
 
-          {/* Recommendation */}
           <Card className="mb-8 bg-primary/5 border-primary/20">
             <CardContent className="p-6">
               <div className="flex items-start gap-3">
                 <Star className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                 <div>
-                  <h3 className="font-bold text-foreground mb-2">ننصح أن تبدأ من مستوى {level}</h3>
+                  <h3 className="font-bold text-foreground mb-2">We recommend starting from level {level}</h3>
                   <p className="text-muted-foreground">{recommendation}</p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          {/* CTA */}
           <div className="space-y-3">
             <Button 
               variant="hero" 
@@ -207,15 +198,15 @@ const PlacementTestResult = () => {
               onClick={() => navigate(`/courses/${level.toLowerCase()}`)}
               className="w-full text-lg"
             >
-              ابدأ من مستوى {level}
-              <ChevronLeft className="w-5 h-5" />
+              Start from level {level}
+              <ChevronRight className="w-5 h-5" />
             </Button>
             <Button 
               variant="outline" 
               onClick={() => navigate('/courses')}
               className="w-full"
             >
-              عرض جميع المستويات
+              View all levels
             </Button>
           </div>
         </main>

@@ -5,67 +5,66 @@ import Header from '@/components/Header';
 const CookiePolicy = () => {
   const sections = [
     {
-      title: '١. مقدمة',
-      content: `ملفات تعريف الارتباط (Cookies) هي ملفات نصية صغيرة يتم تخزينها على جهازك عند زيارة موقعنا. تساعدنا هذه الملفات على تحسين تجربتك وتقديم خدمات أفضل. توضح هذه السياسة كيفية استخدامنا لملفات تعريف الارتباط وخياراتك المتاحة.`
+      title: '1. Introduction',
+      content: `Cookies are small text files stored on your device when you visit our website. These files help us improve your experience and provide better services. This policy explains how we use cookies and what choices are available to you.`
     },
     {
-      title: '٢. أنواع ملفات تعريف الارتباط المستخدمة',
-      content: `**ملفات تعريف الارتباط الأساسية:** هذه الملفات ضرورية لعمل الموقع بشكل صحيح. تتيح لك التنقل واستخدام الميزات الأساسية مثل تسجيل الدخول والوصول إلى المناطق الآمنة. لا يمكن للموقع العمل بشكل صحيح بدون هذه الملفات.
+      title: '2. Types of Cookies We Use',
+      content: `**Essential Cookies:** These cookies are necessary for the website to function properly. They allow you to navigate and use basic features such as logging in and accessing secure areas. The website cannot function properly without these cookies.
 
-**ملفات تعريف الارتباط التحليلية:** تساعدنا هذه الملفات على فهم كيفية تفاعل الزوار مع موقعنا من خلال جمع معلومات مجهولة الهوية. نستخدم هذه البيانات لتحسين محتوى الموقع وتجربة المستخدم.`
+**Analytics Cookies:** These cookies help us understand how visitors interact with our website by collecting anonymous information. We use this data to improve website content and user experience.`
     },
     {
-      title: '٣. كيف نستخدم ملفات تعريف الارتباط',
-      content: `نستخدم ملفات تعريف الارتباط للأغراض التالية:
+      title: '3. How We Use Cookies',
+      content: `We use cookies for the following purposes:
 
-**تذكر تفضيلاتك:** مثل إعدادات اللغة ووضع العرض المفضل لديك.
+**Remembering your preferences:** Such as language settings and your preferred display mode.
 
-**الحفاظ على جلسة تسجيل الدخول:** لتبقى مسجلاً الدخول أثناء تصفحك للموقع.
+**Maintaining your login session:** To keep you logged in as you browse the website.
 
-**تحسين الأداء:** لفهم كيفية استخدام الزوار للموقع وتحسين تجربتهم.
+**Improving performance:** To understand how visitors use the website and improve their experience.
 
-**تتبع التقدم التعليمي:** لحفظ تقدمك في الدروس والتمارين.`
+**Tracking learning progress:** To save your progress in lessons and exercises.`
     },
     {
-      title: '٤. ملفات تعريف الارتباط من جهات خارجية',
-      content: `قد نستخدم خدمات من جهات خارجية تضع ملفات تعريف الارتباط الخاصة بها:
+      title: '4. Third-Party Cookies',
+      content: `We may use third-party services that set their own cookies:
 
-**Google Analytics:** لتحليل حركة المرور على الموقع وفهم سلوك المستخدمين. تساعدنا هذه البيانات على تحسين المحتوى والخدمات.
+**Google Analytics:** To analyse website traffic and understand user behaviour. This data helps us improve content and services.
 
-**Cloudflare:** لتوفير الحماية الأمنية وتسريع تحميل الموقع. قد تستخدم ملفات تعريف الارتباط للتعرف على المتصفحات الموثوقة.
+**Cloudflare:** To provide security protection and speed up website loading. Cookies may be used to recognise trusted browsers.
 
-**خدمات المصادقة:** عند تسجيل الدخول عبر حسابات خارجية مثل Google، قد يتم استخدام ملفات تعريف الارتباط الخاصة بهذه الخدمات.`
+**Authentication Services:** When logging in via external accounts such as Google, cookies from those services may be used.`
     },
     {
-      title: '٥. إدارة ملفات تعريف الارتباط',
-      content: `يمكنك التحكم في ملفات تعريف الارتباط بعدة طرق:
+      title: '5. Managing Cookies',
+      content: `You can control cookies in several ways:
 
-**إعدادات المتصفح:** يمكنك ضبط متصفحك لرفض جميع ملفات تعريف الارتباط أو إعلامك عند إرسالها. تختلف الخطوات حسب المتصفح المستخدم.
+**Browser Settings:** You can set your browser to reject all cookies or notify you when they are sent. The steps vary depending on the browser used.
 
-**حذف ملفات تعريف الارتباط:** يمكنك حذف ملفات تعريف الارتباط المخزنة على جهازك في أي وقت من إعدادات المتصفح.
+**Deleting Cookies:** You can delete cookies stored on your device at any time from your browser settings.
 
-**ملاحظة مهمة:** قد يؤثر تعطيل ملفات تعريف الارتباط على وظائف الموقع وقد لا تتمكن من استخدام بعض الميزات.`
+**Important Note:** Disabling cookies may affect website functionality and you may not be able to use some features.`
     },
     {
-      title: '٦. تحديثات السياسة',
-      content: `قد نقوم بتحديث سياسة ملفات تعريف الارتباط من وقت لآخر لتعكس التغييرات في ممارساتنا أو لأسباب تشغيلية أو قانونية. سيتم نشر أي تغييرات على هذه الصفحة مع تحديث تاريخ "آخر تحديث". ننصحك بمراجعة هذه السياسة بشكل دوري.`
+      title: '6. Policy Updates',
+      content: `We may update this Cookie Policy from time to time to reflect changes in our practices or for operational or legal reasons. Any changes will be posted on this page with an updated "Last Updated" date. We recommend reviewing this policy periodically.`
     },
     {
-      title: '٧. تواصل معنا',
-      content: `إذا كانت لديك أي أسئلة حول سياسة ملفات تعريف الارتباط الخاصة بنا، يمكنك التواصل معنا عبر:
+      title: '7. Contact Us',
+      content: `If you have any questions about our Cookie Policy, you can contact us via:
 
-**البريد الإلكتروني:** privacy@lingoarab.com
+**Email:** privacy@lingospanish.com
 
-**صفحة التواصل:** يمكنك زيارة صفحة "تواصل معنا" على موقعنا لإرسال استفسارك.`
+**Contact Page:** You can visit our "Contact Us" page on our website to send your enquiry.`
     }
   ];
 
   return (
-    <div dir="rtl" className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background">
       <Header showBack showAuthButton />
       
       <main className="container mx-auto px-4 py-8 md:py-12">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -76,14 +75,13 @@ const CookiePolicy = () => {
             <Cookie className="w-8 h-8 text-primary" />
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
-            سياسة ملفات تعريف الارتباط
+            Cookie Policy
           </h1>
           <p className="text-muted-foreground">
-            آخر تحديث: {new Date().toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' })}
+            Last updated: {new Date().toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })}
           </p>
         </motion.div>
 
-        {/* Sections */}
         <div className="max-w-3xl mx-auto space-y-6">
           {sections.map((section, index) => (
             <motion.section
@@ -98,7 +96,7 @@ const CookiePolicy = () => {
                 <span className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-sm font-bold">
                   {index + 1}
                 </span>
-                {section.title.replace(/^[٠-٩]+\.\s*/, '')}
+                {section.title.replace(/^[0-9]+\.\s*/, '')}
               </h2>
               <div className="text-muted-foreground leading-relaxed space-y-3">
                 {section.content.split('\n\n').map((paragraph, pIndex) => (
@@ -117,7 +115,6 @@ const CookiePolicy = () => {
           ))}
         </div>
 
-        {/* Back to top */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -129,7 +126,7 @@ const CookiePolicy = () => {
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="text-primary hover:text-primary/80 transition-colors text-sm font-medium"
           >
-            ↑ العودة للأعلى
+            ↑ Back to Top
           </button>
         </motion.div>
       </main>

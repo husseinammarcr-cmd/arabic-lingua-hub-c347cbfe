@@ -1,7 +1,7 @@
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
-import { BookOpen, ArrowLeft, ArrowRight, Lock, ChevronRight, Star, GraduationCap, Volume2 } from 'lucide-react';
+import { BookOpen, ArrowRight, Lock, ChevronRight, Star, GraduationCap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -12,9 +12,8 @@ import { getLessonContent, VocabItem, SentenceItem } from '@/lib/a1-lessons';
 import { AudioButton } from '@/components/AudioButton';
 import { useAuth } from '@/contexts/AuthContext';
 
-const SITE_URL = 'https://lingoarab.com';
+const SITE_URL = 'https://lingospanish.com';
 
-// Get first lesson of each unit across all levels
 const getFirstLessonsOfUnits = () => {
   const lessons: Array<{
     lessonId: string;
@@ -51,7 +50,6 @@ const getFirstLessonsOfUnits = () => {
   return lessons;
 };
 
-// Check if a lesson is the first in its unit
 export const isFirstLessonOfUnit = (lessonId: string): boolean => {
   const firstLessons = getFirstLessonsOfUnits();
   return firstLessons.some(l => l.lessonId === lessonId);
@@ -65,7 +63,6 @@ const PublicLessonPreview = () => {
   const lessonData = getLessonById(lessonId || '');
   const lessonContent = getLessonContent(lessonId || '');
 
-  // Check if this is a first lesson of any unit
   const isPublicLesson = isFirstLessonOfUnit(lessonId || '');
 
   if (!lessonData) {
@@ -73,11 +70,11 @@ const PublicLessonPreview = () => {
       <PageBackground>
         <Header showBack />
         <main className="container mx-auto px-4 py-16 text-center">
-          <h1 className="text-2xl font-bold mb-4">الدرس غير موجود</h1>
+          <h1 className="text-2xl font-bold mb-4">Lesson Not Found</h1>
           <Link to="/courses">
             <Button>
-              العودة للدورات
-              <ArrowRight className="w-4 h-4 mr-2" />
+              Back to Courses
+              <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
           </Link>
         </main>
@@ -85,12 +82,11 @@ const PublicLessonPreview = () => {
     );
   }
 
-  // If not a first lesson, show teaser and redirect to auth
   if (!isPublicLesson) {
     return (
       <PageBackground>
         <Helmet>
-          <title>{lessonData.lesson.titleAr} - {lessonData.unit.titleAr} | Lingo Arab</title>
+          <title>{lessonData.lesson.titleEn} — {lessonData.unit.titleEn} | Lingo Spanish</title>
           <meta name="robots" content="noindex" />
         </Helmet>
         <Header showBack />
@@ -98,18 +94,18 @@ const PublicLessonPreview = () => {
           <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-primary/10 flex items-center justify-center">
             <Lock className="w-10 h-10 text-primary" />
           </div>
-          <h1 className="text-2xl font-bold mb-4">هذا الدرس متاح للأعضاء فقط</h1>
+          <h1 className="text-2xl font-bold mb-4">This lesson is for members only</h1>
           <p className="text-muted-foreground mb-6">
-            سجّل مجاناً للوصول إلى جميع الدروس والتمارين التفاعلية
+            Sign up for free to access all lessons and interactive exercises
           </p>
           <div className="flex flex-col gap-3">
             <Button onClick={() => navigate('/auth')} size="lg" className="w-full">
-              سجّل الآن مجاناً
-              <ChevronRight className="w-4 h-4 mr-2" />
+              Sign Up Now for Free
+              <ChevronRight className="w-4 h-4 ml-2" />
             </Button>
             <Link to="/courses">
               <Button variant="outline" size="lg" className="w-full">
-                تصفح الدورات
+                Browse Courses
               </Button>
             </Link>
           </div>
@@ -121,71 +117,38 @@ const PublicLessonPreview = () => {
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Course",
-    "name": `${lessonData.lesson.titleAr} - ${lessonData.unit.titleAr}`,
+    "name": `${lessonData.lesson.titleEn} — ${lessonData.unit.titleEn}`,
     "description": lessonData.lesson.descriptionAr,
-    "provider": {
-      "@type": "Organization",
-      "name": "Lingo Arab",
-      "url": SITE_URL
-    },
+    "provider": { "@type": "Organization", "name": "Lingo Spanish", "url": SITE_URL },
     "educationalLevel": lessonData.level.code,
-    "inLanguage": ["ar", "en"],
+    "inLanguage": ["en", "es"],
     "teaches": lessonData.unit.titleEn,
-    "hasCourseInstance": {
-      "@type": "CourseInstance",
-      "courseMode": "Online",
-      "courseWorkload": "PT15M"
-    }
   };
 
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "الرئيسية",
-        "item": SITE_URL
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "الدورات",
-        "item": `${SITE_URL}/courses`
-      },
-      {
-        "@type": "ListItem",
-        "position": 3,
-        "name": `مستوى ${lessonData.level.code}`,
-        "item": `${SITE_URL}/courses/${lessonData.level.code.toLowerCase()}`
-      },
-      {
-        "@type": "ListItem",
-        "position": 4,
-        "name": lessonData.unit.titleAr,
-        "item": `${SITE_URL}/preview/lesson/${lessonId}`
-      }
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE_URL },
+      { "@type": "ListItem", "position": 2, "name": "Courses", "item": `${SITE_URL}/courses` },
+      { "@type": "ListItem", "position": 3, "name": `Level ${lessonData.level.code}`, "item": `${SITE_URL}/courses/${lessonData.level.code.toLowerCase()}` },
+      { "@type": "ListItem", "position": 4, "name": lessonData.unit.titleEn, "item": `${SITE_URL}/preview/lesson/${lessonId}` }
     ]
   };
 
   return (
     <PageBackground>
       <Helmet>
-        <title>{lessonData.lesson.titleAr} - {lessonData.unit.titleAr} | تعلم الإنجليزية مجاناً - Lingo Arab</title>
-        <meta name="description" content={`تعلم ${lessonData.unit.titleAr} في اللغة الإنجليزية. ${lessonData.lesson.descriptionAr}. دروس تفاعلية مجانية للناطقين بالعربية.`} />
+        <title>{lessonData.lesson.titleEn} — {lessonData.unit.titleEn} | Learn Spanish Free — Lingo Spanish</title>
+        <meta name="description" content={`Learn ${lessonData.unit.titleEn} in Spanish. Free interactive lessons for English speakers.`} />
         <link rel="canonical" href={`${SITE_URL}/preview/lesson/${lessonId}`} />
         
-        <meta property="og:title" content={`${lessonData.lesson.titleAr} - ${lessonData.unit.titleAr} | Lingo Arab`} />
-        <meta property="og:description" content={`تعلم ${lessonData.unit.titleAr} في اللغة الإنجليزية مجاناً. دروس تفاعلية للناطقين بالعربية.`} />
+        <meta property="og:title" content={`${lessonData.lesson.titleEn} — ${lessonData.unit.titleEn} | Lingo Spanish`} />
+        <meta property="og:description" content={`Learn ${lessonData.unit.titleEn} in Spanish for free. Interactive lessons for English speakers.`} />
         <meta property="og:url" content={`${SITE_URL}/preview/lesson/${lessonId}`} />
         <meta property="og:type" content="article" />
-        <meta property="og:site_name" content="Lingo Arab" />
-        <meta property="og:locale" content="ar_SA" />
-        
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content={`${lessonData.lesson.titleAr} - Lingo Arab`} />
-        <meta name="twitter:description" content={`تعلم ${lessonData.unit.titleAr} في اللغة الإنجليزية مجاناً`} />
+        <meta property="og:site_name" content="Lingo Spanish" />
+        <meta property="og:locale" content="en_GB" />
         
         <script type="application/ld+json">{JSON.stringify(articleSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
@@ -193,19 +156,17 @@ const PublicLessonPreview = () => {
 
       <Header showBack />
 
-      <main className="container mx-auto px-4 py-8 max-w-4xl" dir="rtl">
-        {/* Breadcrumb */}
+      <main className="container mx-auto px-4 py-8 max-w-4xl">
         <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
-          <Link to="/courses" className="hover:text-primary transition-colors">الدورات</Link>
+          <Link to="/courses" className="hover:text-primary transition-colors">Courses</Link>
           <span>/</span>
-          <Link to={`/courses`} className="hover:text-primary transition-colors">
-            مستوى {lessonData.level.code} - {lessonData.level.titleAr}
+          <Link to="/courses" className="hover:text-primary transition-colors">
+            Level {lessonData.level.code} — {lessonData.level.titleEn}
           </Link>
           <span>/</span>
-          <span className="text-foreground">{lessonData.unit.titleAr}</span>
+          <span className="text-foreground">{lessonData.unit.titleEn}</span>
         </nav>
 
-        {/* Header Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -213,36 +174,30 @@ const PublicLessonPreview = () => {
         >
           <div className="flex items-center gap-3 mb-4">
             <Badge variant="secondary" className="text-sm">
-              <GraduationCap className="w-3 h-3 ml-1" />
-              مستوى {lessonData.level.code}
+              <GraduationCap className="w-3 h-3 mr-1" />
+              Level {lessonData.level.code}
             </Badge>
             <Badge variant="outline" className="text-sm">
-              <Star className="w-3 h-3 ml-1" />
+              <Star className="w-3 h-3 mr-1" />
               +{lessonData.lesson.xpReward} XP
             </Badge>
           </div>
           
           <h1 className="text-3xl md:text-4xl font-bold mb-3">
-            {lessonData.unit.titleAr}: {lessonData.lesson.titleAr}
+            {lessonData.unit.titleEn}: {lessonData.lesson.titleEn}
           </h1>
           <p className="text-lg text-muted-foreground">
             {lessonData.lesson.descriptionAr}
           </p>
         </motion.div>
 
-        {/* Content Preview */}
         {lessonContent ? (
           <div className="space-y-8">
-            {/* Vocabulary Section */}
             {lessonContent.vocab.length > 0 && (
-              <motion.section
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
-              >
+              <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
                 <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
                   <BookOpen className="w-6 h-6 text-primary" />
-                  المفردات
+                  Vocabulary
                 </h2>
                 <div className="grid gap-3 md:grid-cols-2">
                   {lessonContent.vocab.slice(0, 6).map((item: VocabItem, index: number) => (
@@ -256,9 +211,7 @@ const PublicLessonPreview = () => {
                             </div>
                             <p className="text-muted-foreground">{item.arabic}</p>
                             {item.example && (
-                              <p className="text-sm mt-2 text-muted-foreground/80 italic">
-                                "{item.example}"
-                              </p>
+                              <p className="text-sm mt-2 text-muted-foreground/80 italic">"{item.example}"</p>
                             )}
                           </div>
                         </div>
@@ -269,20 +222,15 @@ const PublicLessonPreview = () => {
                 
                 {lessonContent.vocab.length > 6 && (
                   <p className="text-center text-muted-foreground mt-4">
-                    و {lessonContent.vocab.length - 6} مفردات أخرى...
+                    and {lessonContent.vocab.length - 6} more vocabulary items...
                   </p>
                 )}
               </motion.section>
             )}
 
-            {/* Sentences Section */}
             {lessonContent.sentences.length > 0 && (
-              <motion.section
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-              >
-                <h2 className="text-2xl font-bold mb-4">الجمل والعبارات</h2>
+              <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+                <h2 className="text-2xl font-bold mb-4">Sentences & Phrases</h2>
                 <Card>
                   <CardContent className="p-4 space-y-4">
                     {lessonContent.sentences.slice(0, 4).map((sentence: SentenceItem, index: number) => (
@@ -299,7 +247,6 @@ const PublicLessonPreview = () => {
               </motion.section>
             )}
 
-            {/* CTA Section */}
             <motion.section
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -307,54 +254,37 @@ const PublicLessonPreview = () => {
               className="bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl p-8 text-center"
             >
               <h2 className="text-2xl font-bold mb-3">
-                {user ? 'أكمل الدرس الآن!' : 'سجّل مجاناً لإكمال الدرس'}
+                {user ? 'Complete the lesson now!' : 'Sign up for free to complete the lesson'}
               </h2>
               <p className="text-muted-foreground mb-6 max-w-md mx-auto">
                 {user 
-                  ? 'انتقل إلى التمارين التفاعلية واختبر معلوماتك'
-                  : 'احصل على دروس تفاعلية، تمارين متنوعة، وتتبع تقدمك في تعلم الإنجليزية'
+                  ? 'Move on to the interactive exercises and test your knowledge'
+                  : 'Get interactive lessons, varied exercises, and track your progress learning Spanish'
                 }
               </p>
               
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 {user ? (
-                  <Button 
-                    size="lg" 
-                    onClick={() => navigate(`/lesson/${lessonId}`)}
-                    className="gap-2"
-                  >
-                    ابدأ الدرس الكامل
-                    <ArrowLeft className="w-4 h-4" />
+                  <Button size="lg" onClick={() => navigate(`/lesson/${lessonId}`)} className="gap-2">
+                    Start Full Lesson
+                    <ArrowRight className="w-4 h-4" />
                   </Button>
                 ) : (
                   <>
-                    <Button 
-                      size="lg" 
-                      onClick={() => navigate('/auth')}
-                      className="gap-2"
-                    >
-                      سجّل الآن مجاناً
-                      <ArrowLeft className="w-4 h-4" />
+                    <Button size="lg" onClick={() => navigate('/auth')} className="gap-2">
+                      Sign Up Now for Free
+                      <ArrowRight className="w-4 h-4" />
                     </Button>
-                    <Button 
-                      variant="outline" 
-                      size="lg"
-                      onClick={() => navigate('/auth?mode=login')}
-                    >
-                      لديك حساب؟ سجّل الدخول
+                    <Button variant="outline" size="lg" onClick={() => navigate('/auth?mode=login')}>
+                      Already have an account? Log in
                     </Button>
                   </>
                 )}
               </div>
             </motion.section>
 
-            {/* More Lessons Section */}
-            <motion.section
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-            >
-              <h2 className="text-2xl font-bold mb-4">دروس أخرى في هذا المستوى</h2>
+            <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
+              <h2 className="text-2xl font-bold mb-4">Other lessons at this level</h2>
               <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
                 {lessonData.level.units.slice(0, 6).map((unit, index) => (
                   <Link 
@@ -369,8 +299,8 @@ const PublicLessonPreview = () => {
                             {index + 1}
                           </div>
                           <div>
-                            <p className="font-medium">{unit.titleAr}</p>
-                            <p className="text-sm text-muted-foreground">{unit.titleEn}</p>
+                            <p className="font-medium">{unit.titleEn}</p>
+                            <p className="text-sm text-muted-foreground">{unit.titleAr}</p>
                           </div>
                         </div>
                       </CardContent>
@@ -386,12 +316,10 @@ const PublicLessonPreview = () => {
               <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
                 <BookOpen className="w-8 h-8 text-primary" />
               </div>
-              <h2 className="text-xl font-bold mb-2">محتوى الدرس قيد الإعداد</h2>
-              <p className="text-muted-foreground mb-6">
-                سيتم إضافة المحتوى التفاعلي قريباً
-              </p>
+              <h2 className="text-xl font-bold mb-2">Lesson Content Being Prepared</h2>
+              <p className="text-muted-foreground mb-6">Interactive content will be added soon</p>
               <Link to="/courses">
-                <Button>تصفح الدورات الأخرى</Button>
+                <Button>Browse Other Courses</Button>
               </Link>
             </CardContent>
           </Card>

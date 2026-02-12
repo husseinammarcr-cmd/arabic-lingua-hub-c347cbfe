@@ -5,7 +5,6 @@ import { getLevelByCode, getUnitById } from '@/lib/curriculum';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { 
-  ChevronLeft, 
   ChevronRight,
   Star, 
   Lock,
@@ -40,7 +39,6 @@ const levelColors: Record<string, { bg: string; text: string; accent: string }> 
   'B2': { bg: 'bg-amber-500', text: 'text-amber-700 dark:text-amber-400', accent: 'bg-amber-100 dark:bg-amber-900/30' },
 };
 
-// Shake animation for locked lessons
 const shakeAnimation = {
   x: [0, -10, 10, -10, 10, 0],
   transition: { duration: 0.4 }
@@ -57,7 +55,6 @@ const CourseUnit = () => {
   const level = getLevelByCode(levelParam || '');
   const unit = level ? getUnitById(level.code, unitParam || '') : undefined;
 
-  // Get completed lesson IDs
   const completedLessons = useMemo(() => {
     if (!progressData) return [];
     return progressData
@@ -65,7 +62,6 @@ const CourseUnit = () => {
       .map(p => p.lesson_id);
   }, [progressData]);
 
-  // Calculate unit progress
   const unitProgress = useMemo(() => {
     if (!unit) return 0;
     const completed = unit.lessons.filter(l => completedLessons.includes(l.id)).length;
@@ -80,7 +76,7 @@ const CourseUnit = () => {
 
   const handleLockedClick = (lessonId: string) => {
     setShakingLessonId(lessonId);
-    toast.info('أكمل الدرس السابق أولاً', { duration: 2000 });
+    toast.info('Complete the previous lesson first', { duration: 2000 });
     setTimeout(() => setShakingLessonId(null), 500);
   };
 
@@ -92,22 +88,21 @@ const CourseUnit = () => {
           animate={{ opacity: [0.5, 1, 0.5] }}
           transition={{ duration: 1.5, repeat: Infinity }}
         >
-          جاري التحميل...
+          Loading...
         </motion.div>
       </div>
     );
   }
 
-  // Unit not found - show friendly empty state
   if (!level || !unit) {
     return (
-      <div className="min-h-screen bg-gradient-hero flex flex-col items-center justify-center" dir="rtl">
+      <div className="min-h-screen bg-gradient-hero flex flex-col items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-foreground mb-4">الوحدة غير موجودة</h2>
-          <p className="text-muted-foreground mb-6">عذراً، لم نتمكن من العثور على هذه الوحدة</p>
+          <h2 className="text-2xl font-bold text-foreground mb-4">Unit Not Found</h2>
+          <p className="text-muted-foreground mb-6">Sorry, we couldn't find this unit</p>
           <Button onClick={() => navigate('/app/courses')}>
-            <ChevronRight className="w-4 h-4 ml-2" />
-            العودة للمستويات
+            <ChevronRight className="w-4 h-4 mr-2" />
+            Back to Levels
           </Button>
         </div>
       </div>
@@ -117,12 +112,10 @@ const CourseUnit = () => {
   const colors = levelColors[level.code] || levelColors['A1'];
 
   return (
-    <div className="min-h-screen bg-gradient-hero overflow-x-hidden" dir="rtl">
-      {/* Header */}
+    <div className="min-h-screen bg-gradient-hero overflow-x-hidden">
       <Header showBack showUserInfo />
 
       <main className="container mx-auto px-4 py-6 max-w-2xl">
-        {/* Unit Header */}
         <FadeUp>
           <div className="mb-8 text-center">
             <motion.span 
@@ -133,14 +126,13 @@ const CourseUnit = () => {
             >
               {level.code}
             </motion.span>
-            <h2 className="text-3xl font-bold text-foreground mb-2">{unit.titleAr}</h2>
-            <p className="text-muted-foreground ltr-text">{unit.titleEn}</p>
+            <h2 className="text-3xl font-bold text-foreground mb-2">{unit.titleEn}</h2>
+            <p className="text-muted-foreground">{unit.titleAr}</p>
             <p className="text-sm text-muted-foreground mt-2">{unit.descriptionAr}</p>
             
-            {/* Progress bar */}
             <div className="mt-4 max-w-xs mx-auto">
               <div className="flex justify-between text-xs text-muted-foreground mb-1">
-                <span>التقدم</span>
+                <span>Progress</span>
                 <span>{unitProgress}%</span>
               </div>
               <AnimatedProgress value={unitProgress} />
@@ -148,7 +140,6 @@ const CourseUnit = () => {
           </div>
         </FadeUp>
 
-        {/* Lessons List */}
         <StaggerContainer className="space-y-3">
           {unit.lessons.map((lesson, index) => {
             const IconComponent = lessonIcons[lesson.titleAr] || BookOpen;
@@ -180,7 +171,6 @@ const CourseUnit = () => {
                       hasExercises && !isCompleted && "ring-2 ring-primary"
                     )}
                   >
-                    {/* Hover glow effect */}
                     {!isLocked && (
                       <motion.div 
                         className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5 opacity-0"
@@ -190,7 +180,6 @@ const CourseUnit = () => {
                     
                     <CardContent className="p-4 relative">
                       <div className="flex items-center gap-4">
-                        {/* Icon */}
                         <motion.div 
                           className={cn(
                             "flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center",
@@ -209,34 +198,32 @@ const CourseUnit = () => {
                           )}
                         </motion.div>
 
-                        {/* Content */}
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2">
-                            <span className="text-xs text-muted-foreground">الدرس {index + 1}</span>
+                            <span className="text-xs text-muted-foreground">Lesson {index + 1}</span>
                             {isCompleted && (
                               <motion.span 
                                 className="text-xs bg-success/10 text-success px-2 py-0.5 rounded-full"
                                 initial={{ scale: 0 }}
                                 animate={{ scale: 1 }}
                               >
-                                مكتمل
+                                Completed
                               </motion.span>
                             )}
                             {hasExercises && !isCompleted && (
                               <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full">
-                                تمارين حقيقية
+                                Real exercises
                               </span>
                             )}
                           </div>
                           <h3 className="text-base font-bold text-foreground truncate">
-                            {lesson.titleAr}
-                          </h3>
-                          <p className="text-sm text-muted-foreground ltr-text truncate">
                             {lesson.titleEn}
+                          </h3>
+                          <p className="text-sm text-muted-foreground truncate">
+                            {lesson.titleAr}
                           </p>
                         </div>
 
-                        {/* XP Badge */}
                         <motion.div 
                           className="flex items-center gap-1 text-xp text-sm font-bold"
                           whileHover={!prefersReducedMotion ? { scale: 1.1 } : {}}
@@ -245,11 +232,10 @@ const CourseUnit = () => {
                           <span>+{lesson.xpReward}</span>
                         </motion.div>
 
-                        {/* Arrow */}
                         <motion.div
-                          whileHover={!isLocked && !prefersReducedMotion ? { x: -4 } : {}}
+                          whileHover={!isLocked && !prefersReducedMotion ? { x: 4 } : {}}
                         >
-                          <ChevronLeft className="w-5 h-5 text-muted-foreground flex-shrink-0" />
+                          <ChevronRight className="w-5 h-5 text-muted-foreground flex-shrink-0" />
                         </motion.div>
                       </div>
                     </CardContent>

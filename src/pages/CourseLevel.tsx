@@ -6,8 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { 
-  ChevronLeft, 
-  ChevronRight,
+  ChevronRight, 
   Lock,
   CheckCircle,
   BookOpen,
@@ -53,7 +52,7 @@ import Header from '@/components/Header';
 import { useUserProgress, getUnitProgress } from '@/hooks/useProgress';
 
 
-const SITE_URL = 'https://lingoarab.com';
+const SITE_URL = 'https://lingospanish.com';
 
 const iconMap: Record<string, React.ElementType> = {
   'hand-wave': HandMetal,
@@ -100,60 +99,45 @@ const levelColors: Record<string, { bg: string; text: string; accent: string }> 
   'B2': { bg: 'bg-amber-500', text: 'text-amber-700 dark:text-amber-400', accent: 'bg-amber-100 dark:bg-amber-900/30' },
 };
 
-// Level metadata for SEO
 const levelMetadata: Record<string, { 
-  titleAr: string; 
-  titleEn: string; 
-  descAr: string; 
-  descEn: string;
+  title: string; 
+  desc: string;
   cefrLevel: string;
   duration: string;
 }> = {
   'a1': {
-    titleAr: 'المستوى المبتدئ A1',
-    titleEn: 'Beginner Level A1',
-    descAr: 'تعلم أساسيات اللغة الإنجليزية: التحيات، الأرقام، الألوان، والعبارات اليومية البسيطة',
-    descEn: 'Learn English basics: greetings, numbers, colors, and simple daily phrases',
+    title: 'Beginner Level A1',
+    desc: 'Learn Spanish basics: greetings, numbers, colours, and simple daily phrases',
     cefrLevel: 'A1',
     duration: 'PT20H'
   },
   'a2': {
-    titleAr: 'المستوى ما قبل المتوسط A2',
-    titleEn: 'Elementary Level A2',
-    descAr: 'طور مهاراتك في المحادثات اليومية، الطقس، الصحة، والسفر',
-    descEn: 'Develop skills in daily conversations, weather, health, and travel',
+    title: 'Elementary Level A2',
+    desc: 'Develop skills in daily conversations, weather, health, and travel',
     cefrLevel: 'A2',
     duration: 'PT25H'
   },
   'b1': {
-    titleAr: 'المستوى المتوسط B1',
-    titleEn: 'Intermediate Level B1',
-    descAr: 'أتقن المحادثات المتقدمة، القواعد، والتعبير عن الآراء بثقة',
-    descEn: 'Master advanced conversations, grammar, and express opinions confidently',
+    title: 'Intermediate Level B1',
+    desc: 'Master advanced conversations, grammar, and express opinions confidently',
     cefrLevel: 'B1',
     duration: 'PT30H'
   },
   'b2': {
-    titleAr: 'المستوى فوق المتوسط B2',
-    titleEn: 'Upper-Intermediate Level B2',
-    descAr: 'تعلم التواصل في بيئات العمل والأكاديمية بطلاقة',
-    descEn: 'Learn to communicate fluently in work and academic environments',
+    title: 'Upper-Intermediate Level B2',
+    desc: 'Learn to communicate fluently in work and academic environments',
     cefrLevel: 'B2',
     duration: 'PT35H'
   },
   'c1': {
-    titleAr: 'المستوى المتقدم C1',
-    titleEn: 'Advanced Level C1',
-    descAr: 'أتقن التعبير الدقيق، البلاغة، والنقاشات المعقدة',
-    descEn: 'Master nuanced expression, rhetoric, and complex discussions',
+    title: 'Advanced Level C1',
+    desc: 'Master nuanced expression, rhetoric, and complex discussions',
     cefrLevel: 'C1',
     duration: 'PT40H'
   },
   'c2': {
-    titleAr: 'مستوى الإتقان C2',
-    titleEn: 'Proficiency Level C2',
-    descAr: 'حقق الإتقان الكامل في اللغة الإنجليزية على مستوى المتحدث الأصلي',
-    descEn: 'Achieve complete mastery of English at native speaker level',
+    title: 'Proficiency Level C2',
+    desc: 'Achieve complete mastery of Spanish at native speaker level',
     cefrLevel: 'C2',
     duration: 'PT45H'
   }
@@ -169,22 +153,20 @@ const CourseLevel = () => {
   const levelKey = levelParam?.toLowerCase() || '';
   const meta = levelMetadata[levelKey];
 
-  // JSON-LD Course schema (must be before any early returns)
   const courseSchema = useMemo(() => {
     if (!meta || !level) return null;
     return {
       "@context": "https://schema.org",
       "@type": "Course",
-      "name": `${meta.titleEn} - Lingo Arab`,
-      "alternateName": meta.titleAr,
-      "description": meta.descEn,
+      "name": `${meta.title} - Lingo Spanish`,
+      "description": meta.desc,
       "provider": {
         "@type": "Organization",
-        "name": "Lingo Arab",
+        "name": "Lingo Spanish",
         "url": SITE_URL
       },
       "educationalLevel": meta.cefrLevel,
-      "inLanguage": ["en", "ar"],
+      "inLanguage": ["en", "es"],
       "isAccessibleForFree": true,
       "hasCourseInstance": {
         "@type": "CourseInstance",
@@ -197,7 +179,6 @@ const CourseLevel = () => {
     };
   }, [meta, level, levelKey]);
 
-  // BreadcrumbList schema
   const breadcrumbSchema = useMemo(() => {
     if (!meta) return null;
     return {
@@ -207,26 +188,25 @@ const CourseLevel = () => {
         {
           "@type": "ListItem",
           "position": 1,
-          "name": "الرئيسية",
+          "name": "Home",
           "item": SITE_URL
         },
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "الدورات",
+          "name": "Courses",
           "item": `${SITE_URL}/courses`
         },
         {
           "@type": "ListItem",
           "position": 3,
-          "name": meta.titleAr,
+          "name": meta.title,
           "item": `${SITE_URL}/courses/${levelKey}`
         }
       ]
     };
   }, [meta, levelKey]);
 
-  // Compute completed lesson IDs from progress data
   const completedLessonIds = useMemo(() => {
     if (!progressData) return [];
     return progressData
@@ -234,7 +214,6 @@ const CourseLevel = () => {
       .map(p => p.lesson_id);
   }, [progressData]);
 
-  // Compute unit progress for this level with placement level awareness
   const unitProgressMap = useMemo(() => {
     if (!levelParam) return {};
     const progressList = getUnitProgress(
@@ -259,22 +238,21 @@ const CourseLevel = () => {
   if (isLoading || isProgressLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
-        <div className="animate-pulse text-primary text-xl">جاري التحميل...</div>
+        <div className="animate-pulse text-primary text-xl">Loading...</div>
       </div>
     );
   }
 
-  // Level not found - show friendly empty state
   if (!level) {
     return (
       <PageBackground>
-        <div className="min-h-screen flex flex-col items-center justify-center" dir="rtl">
+        <div className="min-h-screen flex flex-col items-center justify-center">
           <div className="text-center">
-            <h2 className="text-2xl font-bold text-foreground mb-4">المستوى غير موجود</h2>
-            <p className="text-muted-foreground mb-6">عذراً، لم نتمكن من العثور على هذا المستوى</p>
+            <h2 className="text-2xl font-bold text-foreground mb-4">Level Not Found</h2>
+            <p className="text-muted-foreground mb-6">Sorry, we couldn't find this level</p>
             <Button onClick={() => navigate('/app/courses')}>
-              <ChevronRight className="w-4 h-4 ml-2" />
-              العودة للمستويات
+              <ChevronRight className="w-4 h-4 mr-2" />
+              Back to Levels
             </Button>
           </div>
         </div>
@@ -288,47 +266,40 @@ const CourseLevel = () => {
     <PageBackground>
       {meta && (
         <Helmet>
-          <title>{meta.titleAr} | Lingo Arab – تعلم الإنجليزية مجانا</title>
-          <meta name="description" content={meta.descAr} />
+          <title>{meta.title} | Lingo Spanish – Learn Spanish Free</title>
+          <meta name="description" content={meta.desc} />
           <link rel="canonical" href={`${SITE_URL}/courses/${levelKey}`} />
           
-          {/* OpenGraph */}
-          <meta property="og:title" content={`${meta.titleAr} | Lingo Arab`} />
-          <meta property="og:description" content={meta.descAr} />
+          <meta property="og:title" content={`${meta.title} | Lingo Spanish`} />
+          <meta property="og:description" content={meta.desc} />
           <meta property="og:url" content={`${SITE_URL}/courses/${levelKey}`} />
           <meta property="og:type" content="website" />
           <meta property="og:image" content={`${SITE_URL}/og-image.png`} />
-          <meta property="og:site_name" content="Lingo Arab" />
-          <meta property="og:locale" content="ar_SA" />
+          <meta property="og:site_name" content="Lingo Spanish" />
+          <meta property="og:locale" content="en_GB" />
           
-          {/* Twitter */}
           <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:title" content={`${meta.titleAr} | Lingo Arab`} />
-          <meta name="twitter:description" content={meta.descAr} />
+          <meta name="twitter:title" content={`${meta.title} | Lingo Spanish`} />
+          <meta name="twitter:description" content={meta.desc} />
           <meta name="twitter:image" content={`${SITE_URL}/og-image.png`} />
           
-          {/* JSON-LD Schemas */}
           {courseSchema && <script type="application/ld+json">{JSON.stringify(courseSchema)}</script>}
           {breadcrumbSchema && <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>}
         </Helmet>
       )}
-      <div dir="rtl">
-      {/* Header */}
+      <div>
       <Header showBack showUserInfo />
 
       <main className="container mx-auto px-4 py-6 max-w-2xl">
-        {/* Level Header */}
         <div className="mb-8 text-center">
           <span className={cn("inline-block text-sm font-bold px-3 py-1 rounded-full mb-3", colors.accent, colors.text)}>
             {level.code}
           </span>
-          <h2 className="text-3xl font-bold text-foreground mb-2">{level.titleAr}</h2>
-          <p className="text-muted-foreground ltr-text">{level.titleEn}</p>
+          <h2 className="text-3xl font-bold text-foreground mb-2">{level.titleEn}</h2>
+          <p className="text-muted-foreground">{level.titleAr}</p>
           <p className="text-sm text-muted-foreground mt-2">{level.descriptionAr}</p>
         </div>
 
-
-        {/* Units List */}
         <div className="space-y-4">
         {level.units.map((unit, index) => {
             const IconComponent = iconMap[unit.icon] || BookOpen;
@@ -349,7 +320,6 @@ const CourseLevel = () => {
                   isCompleted && "ring-2 ring-success"
                 )}
               >
-                {/* Gradient accent bar */}
                 <div className={cn(
                   "absolute top-0 left-0 right-0 h-1",
                   isCompleted ? "bg-gradient-success" : colors.bg
@@ -357,7 +327,6 @@ const CourseLevel = () => {
 
                 <CardContent className="p-5">
                   <div className="flex items-start gap-4">
-                    {/* Icon */}
                     <div className={cn(
                       "flex-shrink-0 w-14 h-14 rounded-xl flex items-center justify-center",
                       isCompleted ? "bg-success/10 text-success" : cn(colors.accent, colors.text)
@@ -371,23 +340,21 @@ const CourseLevel = () => {
                       )}
                     </div>
 
-                    {/* Content */}
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="text-xs text-muted-foreground">الوحدة {index + 1}</span>
+                        <span className="text-xs text-muted-foreground">Unit {index + 1}</span>
                       </div>
                       <h3 className="text-lg font-bold text-foreground mb-1 truncate">
-                        {unit.titleAr}
-                      </h3>
-                      <p className="text-sm text-muted-foreground ltr-text truncate mb-3">
                         {unit.titleEn}
+                      </h3>
+                      <p className="text-sm text-muted-foreground truncate mb-3">
+                        {unit.titleAr}
                       </p>
 
-                      {/* Progress */}
                       <div className="space-y-2">
                         <div className="flex justify-between items-center text-xs">
                           <span className="text-muted-foreground">
-                            {completedLessons} / {lessonsCount} دروس
+                            {completedLessons} / {lessonsCount} lessons
                           </span>
                           <span className={cn("font-semibold", colors.text)}>
                             {Math.round(progress)}%
@@ -397,8 +364,7 @@ const CourseLevel = () => {
                       </div>
                     </div>
 
-                    {/* Arrow */}
-                    <ChevronLeft className="w-5 h-5 text-muted-foreground flex-shrink-0 mt-2" />
+                    <ChevronRight className="w-5 h-5 text-muted-foreground flex-shrink-0 mt-2" />
                   </div>
                 </CardContent>
               </Card>

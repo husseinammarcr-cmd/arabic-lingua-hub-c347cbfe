@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { useVerifyCertificate, Certificate } from '@/hooks/useCertificates';
 import Header from '@/components/Header';
 import { format } from 'date-fns';
-import { ar } from 'date-fns/locale';
+import { enGB } from 'date-fns/locale';
 
 const VerifyCertificate = () => {
   const [code, setCode] = useState('');
@@ -38,9 +38,9 @@ const VerifyCertificate = () => {
           <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
             <ShieldCheck className="w-10 h-10 text-primary" />
           </div>
-          <h1 className="text-3xl font-bold mb-2">التحقق من الشهادة</h1>
+          <h1 className="text-3xl font-bold mb-2">Verify Certificate</h1>
           <p className="text-muted-foreground">
-            أدخل رمز الشهادة للتحقق من صحتها
+            Enter the certificate code to verify its authenticity
           </p>
         </div>
 
@@ -48,17 +48,17 @@ const VerifyCertificate = () => {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Search className="w-5 h-5" />
-              البحث عن شهادة
+              Search Certificate
             </CardTitle>
             <CardDescription>
-              أدخل رمز الشهادة المكون من 12 حرف (مثال: LA-C2-ABC123)
+              Enter the 12-character certificate code (e.g. LS-C2-ABC123)
             </CardDescription>
           </CardHeader>
           
           <CardContent className="space-y-6">
             <div className="flex gap-2">
               <Input
-                placeholder="LA-C2-XXXXXX"
+                placeholder="LS-C2-XXXXXX"
                 value={code}
                 onChange={(e) => setCode(e.target.value.toUpperCase())}
                 onKeyPress={handleKeyPress}
@@ -85,36 +85,36 @@ const VerifyCertificate = () => {
                       <CheckCircle className="w-8 h-8 text-green-600" />
                       <div>
                         <h3 className="font-bold text-green-800 dark:text-green-200 text-lg">
-                          شهادة صالحة ✓
+                          Valid Certificate ✓
                         </h3>
                         <p className="text-green-600 dark:text-green-400 text-sm">
-                          تم التحقق من صحة هذه الشهادة
+                          This certificate has been verified
                         </p>
                       </div>
                     </div>
                     
                     <div className="bg-white dark:bg-background rounded-lg p-4 space-y-3">
                       <div className="flex justify-between items-center border-b pb-2">
-                        <span className="text-muted-foreground">الاسم</span>
+                        <span className="text-muted-foreground">Name</span>
                         <span className="font-semibold">{result.full_name}</span>
                       </div>
                       <div className="flex justify-between items-center border-b pb-2">
-                        <span className="text-muted-foreground">المستوى</span>
+                        <span className="text-muted-foreground">Level</span>
                         <span className="font-semibold flex items-center gap-2">
                           <Award className="w-4 h-4 text-primary" />
                           {result.level}
                         </span>
                       </div>
                       <div className="flex justify-between items-center border-b pb-2">
-                        <span className="text-muted-foreground">رمز الشهادة</span>
+                        <span className="text-muted-foreground">Certificate Code</span>
                         <span className="font-mono font-semibold" dir="ltr">
                           {result.certificate_code}
                         </span>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-muted-foreground">تاريخ الإصدار</span>
+                        <span className="text-muted-foreground">Date of Issue</span>
                         <span className="font-semibold">
-                          {format(new Date(result.issued_at), 'dd MMMM yyyy', { locale: ar })}
+                          {format(new Date(result.issued_at), 'dd MMMM yyyy', { locale: enGB })}
                         </span>
                       </div>
                     </div>
@@ -123,10 +123,10 @@ const VerifyCertificate = () => {
                   <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-xl p-6 text-center">
                     <XCircle className="w-12 h-12 text-red-500 mx-auto mb-3" />
                     <h3 className="font-bold text-red-800 dark:text-red-200 text-lg mb-1">
-                      شهادة غير موجودة
+                      Certificate Not Found
                     </h3>
                     <p className="text-red-600 dark:text-red-400 text-sm">
-                      لم نتمكن من العثور على شهادة بهذا الرمز. تأكد من إدخال الرمز بشكل صحيح.
+                      We couldn't find a certificate with this code. Please make sure it was entered correctly.
                     </p>
                   </div>
                 )}
@@ -137,9 +137,9 @@ const VerifyCertificate = () => {
 
         <div className="mt-8 text-center text-sm text-muted-foreground">
           <p>
-            شهادات LingoArab معتمدة ومسجلة في نظامنا.
+            Lingo Spanish certificates are registered in our system.
             <br />
-            للاستفسارات، تواصل معنا عبر صفحة <a href="/contact" className="text-primary hover:underline">التواصل</a>
+            For enquiries, contact us via our <a href="/contact" className="text-primary hover:underline">Contact</a> page
           </p>
         </div>
       </main>

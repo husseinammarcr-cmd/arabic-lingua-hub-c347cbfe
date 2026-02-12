@@ -4,75 +4,70 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { useAuth } from '@/contexts/AuthContext';
-import { Target, Sparkles, ArrowLeft, Brain, CheckCircle2, ChevronRight } from 'lucide-react';
+import { Target, Sparkles, ArrowRight, Brain, CheckCircle2, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import AuthBackground from '@/components/animations/AuthBackground';
 
-// Quick placement test questions (10 questions - smart selection)
 interface QuickQuestion {
   id: number;
   level: 'A1' | 'A2' | 'B1' | 'B2';
-  questionAr: string;
+  question: string;
   options: { id: string; text: string }[];
   correctAnswer: string;
 }
 
 const QUICK_QUESTIONS: QuickQuestion[] = [
-  // A1 (3 questions)
   {
-    id: 1, level: 'A1', questionAr: 'ما معنى كلمة "Hello"؟',
-    options: [{ id: 'a', text: 'مرحباً' }, { id: 'b', text: 'وداعاً' }, { id: 'c', text: 'شكراً' }, { id: 'd', text: 'آسف' }],
+    id: 1, level: 'A1', question: 'What does "Hola" mean?',
+    options: [{ id: 'a', text: 'Hello' }, { id: 'b', text: 'Goodbye' }, { id: 'c', text: 'Thank you' }, { id: 'd', text: 'Sorry' }],
     correctAnswer: 'a'
   },
   {
-    id: 2, level: 'A1', questionAr: 'اختر الجملة الصحيحة:',
-    options: [{ id: 'a', text: 'I am a student.' }, { id: 'b', text: 'I is a student.' }, { id: 'c', text: 'I are a student.' }, { id: 'd', text: 'I be student.' }],
+    id: 2, level: 'A1', question: 'Choose the correct sentence:',
+    options: [{ id: 'a', text: 'Yo soy estudiante.' }, { id: 'b', text: 'Yo es estudiante.' }, { id: 'c', text: 'Yo son estudiante.' }, { id: 'd', text: 'Yo ser estudiante.' }],
     correctAnswer: 'a'
   },
   {
-    id: 3, level: 'A1', questionAr: 'أكمل: She ___ a teacher.',
-    options: [{ id: 'a', text: 'am' }, { id: 'b', text: 'is' }, { id: 'c', text: 'are' }, { id: 'd', text: 'be' }],
+    id: 3, level: 'A1', question: 'Complete: Ella ___ profesora.',
+    options: [{ id: 'a', text: 'soy' }, { id: 'b', text: 'es' }, { id: 'c', text: 'somos' }, { id: 'd', text: 'ser' }],
     correctAnswer: 'b'
   },
-  // A2 (3 questions)
   {
-    id: 4, level: 'A2', questionAr: 'أكمل: I ___ to school yesterday.',
-    options: [{ id: 'a', text: 'go' }, { id: 'b', text: 'goes' }, { id: 'c', text: 'went' }, { id: 'd', text: 'going' }],
+    id: 4, level: 'A2', question: 'Complete: Yo ___ a la escuela ayer.',
+    options: [{ id: 'a', text: 'voy' }, { id: 'b', text: 'va' }, { id: 'c', text: 'fui' }, { id: 'd', text: 'yendo' }],
     correctAnswer: 'c'
   },
   {
-    id: 5, level: 'A2', questionAr: 'اختر: She can ___ well.',
-    options: [{ id: 'a', text: 'sings' }, { id: 'b', text: 'sing' }, { id: 'c', text: 'to sing' }, { id: 'd', text: 'singing' }],
+    id: 5, level: 'A2', question: 'Choose: Ella puede ___ bien.',
+    options: [{ id: 'a', text: 'canta' }, { id: 'b', text: 'cantar' }, { id: 'c', text: 'a cantar' }, { id: 'd', text: 'cantando' }],
     correctAnswer: 'b'
   },
   {
-    id: 6, level: 'A2', questionAr: 'This book is ___ than that one.',
-    options: [{ id: 'a', text: 'interesting' }, { id: 'b', text: 'more interesting' }, { id: 'c', text: 'most interesting' }, { id: 'd', text: 'interestinger' }],
+    id: 6, level: 'A2', question: 'Este libro es ___ que ese.',
+    options: [{ id: 'a', text: 'interesante' }, { id: 'b', text: 'más interesante' }, { id: 'c', text: 'el más interesante' }, { id: 'd', text: 'interesanter' }],
     correctAnswer: 'b'
   },
-  // B1 (2 questions)
   {
-    id: 7, level: 'B1', questionAr: 'If I ___ rich, I would travel the world.',
-    options: [{ id: 'a', text: 'am' }, { id: 'b', text: 'was' }, { id: 'c', text: 'were' }, { id: 'd', text: 'will be' }],
+    id: 7, level: 'B1', question: 'Si yo ___ rico, viajaría por el mundo.',
+    options: [{ id: 'a', text: 'soy' }, { id: 'b', text: 'era' }, { id: 'c', text: 'fuera' }, { id: 'd', text: 'seré' }],
     correctAnswer: 'c'
   },
   {
-    id: 8, level: 'B1', questionAr: 'I wish I ___ speak French.',
-    options: [{ id: 'a', text: 'can' }, { id: 'b', text: 'could' }, { id: 'c', text: 'will' }, { id: 'd', text: 'would' }],
-    correctAnswer: 'b'
-  },
-  // B2 (2 questions)
-  {
-    id: 9, level: 'B2', questionAr: 'Had I known about the meeting, I ___ attended.',
-    options: [{ id: 'a', text: 'will have' }, { id: 'b', text: 'would have' }, { id: 'c', text: 'would' }, { id: 'd', text: 'had' }],
+    id: 8, level: 'B1', question: 'Ojalá yo ___ hablar francés.',
+    options: [{ id: 'a', text: 'puedo' }, { id: 'b', text: 'pudiera' }, { id: 'c', text: 'podré' }, { id: 'd', text: 'podría' }],
     correctAnswer: 'b'
   },
   {
-    id: 10, level: 'B2', questionAr: 'By this time next year, I ___ my degree.',
-    options: [{ id: 'a', text: 'will complete' }, { id: 'b', text: 'will have completed' }, { id: 'c', text: 'complete' }, { id: 'd', text: 'am completing' }],
+    id: 9, level: 'B2', question: 'Si hubiera sabido de la reunión, ___ asistido.',
+    options: [{ id: 'a', text: 'habré' }, { id: 'b', text: 'habría' }, { id: 'c', text: 'habría que' }, { id: 'd', text: 'había' }],
+    correctAnswer: 'b'
+  },
+  {
+    id: 10, level: 'B2', question: 'Para esta época el próximo año, ___ mi carrera.',
+    options: [{ id: 'a', text: 'terminaré' }, { id: 'b', text: 'habré terminado' }, { id: 'c', text: 'termino' }, { id: 'd', text: 'estoy terminando' }],
     correctAnswer: 'b'
   },
 ];
@@ -80,7 +75,7 @@ const QUICK_QUESTIONS: QuickQuestion[] = [
 const Onboarding = () => {
   const navigate = useNavigate();
   const { updateProfile, user, refreshProfile } = useAuth();
-  const [step, setStep] = useState(0); // 0: goal, 1: test intro, 2: test, 3: result
+  const [step, setStep] = useState(0);
   const [dailyGoal, setDailyGoal] = useState<'5' | '10' | '15'>('10');
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
@@ -89,9 +84,9 @@ const Onboarding = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const goals = [
-    { value: '5' as const, titleAr: '5 دقائق', desc: 'مشغول جداً', icon: '⚡' },
-    { value: '10' as const, titleAr: '10 دقائق', desc: 'توازن مثالي', icon: '✨' },
-    { value: '15' as const, titleAr: '15 دقائق', desc: 'جاد في التعلم', icon: '🔥' },
+    { value: '5' as const, title: '5 minutes', desc: 'Very busy', icon: '⚡' },
+    { value: '10' as const, title: '10 minutes', desc: 'Perfect balance', icon: '✨' },
+    { value: '15' as const, title: '15 minutes', desc: 'Serious learner', icon: '🔥' },
   ];
 
   const currentQuestion = QUICK_QUESTIONS[currentQuestionIndex];
@@ -112,7 +107,6 @@ const Onboarding = () => {
       setCurrentQuestionIndex(prev => prev + 1);
       setSelectedOption(null);
     } else {
-      // Calculate level based on answers
       const levelScores = { A1: 0, A2: 0, B1: 0, B2: 0 };
       newAnswers.forEach(a => {
         if (a.isCorrect) levelScores[a.level as keyof typeof levelScores]++;
@@ -139,7 +133,6 @@ const Onboarding = () => {
     try {
       const totalCorrect = answers.filter(a => a.isCorrect).length;
       
-      // Save placement test result
       await supabase.from('placement_tests').insert([{
         user_id: user.id,
         score: totalCorrect,
@@ -154,7 +147,6 @@ const Onboarding = () => {
         })),
       }]);
 
-      // Update profile with level and completion status
       await updateProfile({
         daily_goal: dailyGoal,
         onboarding_completed: true,
@@ -166,11 +158,11 @@ const Onboarding = () => {
       });
 
       await refreshProfile();
-      toast.success(`مبروك! مستواك ${calculatedLevel} 🎉`);
+      toast.success(`Congratulations! Your level is ${calculatedLevel} 🎉`);
       navigate(`/courses/${calculatedLevel.toLowerCase()}`);
     } catch (error) {
       console.error('Error saving onboarding:', error);
-      toast.error('حدث خطأ، يرجى المحاولة مرة أخرى');
+      toast.error('An error occurred, please try again');
     } finally {
       setIsSubmitting(false);
     }
@@ -188,7 +180,7 @@ const Onboarding = () => {
       navigate('/courses/a1');
     } catch (error) {
       console.error('Error:', error);
-      toast.error('حدث خطأ');
+      toast.error('An error occurred');
     } finally {
       setIsSubmitting(false);
     }
@@ -196,16 +188,16 @@ const Onboarding = () => {
 
   const getLevelInfo = (level: string) => {
     const info: Record<string, { name: string; color: string; emoji: string; desc: string }> = {
-      'A1': { name: 'مبتدئ', color: 'from-emerald-500 to-green-600', emoji: '🌱', desc: 'ستبدأ من الأساسيات وتتعلم التحيات والأرقام والتعبيرات اليومية' },
-      'A2': { name: 'أساسي', color: 'from-sky-500 to-blue-600', emoji: '📚', desc: 'ستتعلم التعبير عن نفسك في مواقف يومية والتحدث عن الماضي' },
-      'B1': { name: 'متوسط', color: 'from-violet-500 to-purple-600', emoji: '🚀', desc: 'ستتمكن من التعبير عن آرائك والتعامل مع مواقف متنوعة' },
-      'B2': { name: 'متقدم', color: 'from-amber-500 to-orange-600', emoji: '🏆', desc: 'ستتعلم التعبير بطلاقة ومناقشة مواضيع معقدة' },
+      'A1': { name: 'Beginner', color: 'from-emerald-500 to-green-600', emoji: '🌱', desc: 'You\'ll start with the basics: greetings, numbers, and everyday expressions' },
+      'A2': { name: 'Elementary', color: 'from-sky-500 to-blue-600', emoji: '📚', desc: 'You\'ll learn to express yourself in daily situations and talk about the past' },
+      'B1': { name: 'Intermediate', color: 'from-violet-500 to-purple-600', emoji: '🚀', desc: 'You\'ll be able to express opinions and handle various situations' },
+      'B2': { name: 'Advanced', color: 'from-amber-500 to-orange-600', emoji: '🏆', desc: 'You\'ll learn to express yourself fluently and discuss complex topics' },
     };
     return info[level] || info['A1'];
   };
 
   return (
-    <div className="min-h-screen bg-gradient-hero flex items-center justify-center p-4 relative overflow-hidden" dir="rtl">
+    <div className="min-h-screen bg-gradient-hero flex items-center justify-center p-4 relative overflow-hidden">
       <AuthBackground />
       
       <motion.div
@@ -216,7 +208,6 @@ const Onboarding = () => {
         <Card className="backdrop-blur-sm bg-card/95 border-border/50 shadow-2xl overflow-hidden">
           <CardContent className="p-6">
             <AnimatePresence mode="wait">
-              {/* Step 0: Daily Goal */}
               {step === 0 && (
                 <motion.div
                   key="goal"
@@ -233,8 +224,8 @@ const Onboarding = () => {
                     <Target className="w-16 h-16 mx-auto text-primary" />
                   </motion.div>
                   <div>
-                    <h2 className="text-2xl font-bold mb-2">كم وقت تريد للدراسة يومياً؟</h2>
-                    <p className="text-muted-foreground text-sm">اختر هدفك اليومي</p>
+                    <h2 className="text-2xl font-bold mb-2">How long do you want to study daily?</h2>
+                    <p className="text-muted-foreground text-sm">Choose your daily goal</p>
                   </div>
                   <div className="space-y-3">
                     {goals.map((g, i) => (
@@ -254,8 +245,8 @@ const Onboarding = () => {
                         >
                           <div className="flex items-center gap-3">
                             <span className="text-2xl">{g.icon}</span>
-                            <div className="text-right">
-                              <span className="font-bold block">{g.titleAr}</span>
+                            <div className="text-left">
+                              <span className="font-bold block">{g.title}</span>
                               <span className="text-xs opacity-70">{g.desc}</span>
                             </div>
                           </div>
@@ -265,12 +256,11 @@ const Onboarding = () => {
                     ))}
                   </div>
                   <Button variant="hero" size="lg" className="w-full" onClick={() => setStep(1)}>
-                    التالي <ArrowLeft className="w-4 h-4" />
+                    Next <ArrowRight className="w-4 h-4" />
                   </Button>
                 </motion.div>
               )}
 
-              {/* Step 1: Test Intro */}
               {step === 1 && (
                 <motion.div
                   key="intro"
@@ -287,28 +277,28 @@ const Onboarding = () => {
                     <Brain className="w-20 h-20 mx-auto text-primary" />
                   </motion.div>
                   <div>
-                    <h2 className="text-2xl font-bold mb-2">اختبار تحديد المستوى</h2>
+                    <h2 className="text-2xl font-bold mb-2">Placement Test</h2>
                     <p className="text-muted-foreground">
-                      10 أسئلة سريعة لتحديد مستواك الحقيقي
+                      10 quick questions to determine your real level
                     </p>
                   </div>
                   <div className="bg-primary/10 rounded-xl p-4 text-sm space-y-2">
                     <p className="flex items-center gap-2">
                       <span className="text-primary">✓</span>
-                      أسئلة متدرجة من المبتدئ للمتقدم
+                      Progressive questions from beginner to advanced
                     </p>
                     <p className="flex items-center gap-2">
                       <span className="text-primary">✓</span>
-                      نحدد لك المستوى المناسب تلقائياً
+                      We automatically determine the right level for you
                     </p>
                     <p className="flex items-center gap-2">
                       <span className="text-primary">✓</span>
-                      يستغرق أقل من دقيقتين
+                      Takes less than two minutes
                     </p>
                   </div>
                   <div className="space-y-3">
                     <Button variant="hero" size="lg" className="w-full" onClick={() => setStep(2)}>
-                      <Sparkles className="w-4 h-4" /> ابدأ الاختبار
+                      <Sparkles className="w-4 h-4" /> Start Test
                     </Button>
                     <Button 
                       variant="ghost" 
@@ -317,13 +307,12 @@ const Onboarding = () => {
                       onClick={skipTest}
                       disabled={isSubmitting}
                     >
-                      تخطي وابدأ من المستوى الأول
+                      Skip and start from Level 1
                     </Button>
                   </div>
                 </motion.div>
               )}
 
-              {/* Step 2: Test Questions */}
               {step === 2 && currentQuestion && (
                 <motion.div
                   key={`question-${currentQuestionIndex}`}
@@ -351,7 +340,7 @@ const Onboarding = () => {
                   </div>
 
                   <h2 className="text-lg font-bold leading-relaxed">
-                    {currentQuestion.questionAr}
+                    {currentQuestion.question}
                   </h2>
 
                   <div className="space-y-2">
@@ -363,7 +352,7 @@ const Onboarding = () => {
                         transition={{ delay: i * 0.05 }}
                         onClick={() => handleSelectOption(option.id)}
                         className={cn(
-                          "w-full p-3 rounded-xl border-2 text-right transition-all duration-200",
+                          "w-full p-3 rounded-xl border-2 text-left transition-all duration-200",
                           "hover:border-primary/50 hover:bg-primary/5",
                           selectedOption === option.id
                             ? "border-primary bg-primary/10 shadow-md"
@@ -397,15 +386,14 @@ const Onboarding = () => {
                     disabled={!selectedOption}
                   >
                     {currentQuestionIndex < QUICK_QUESTIONS.length - 1 ? (
-                      <>التالي <ArrowLeft className="w-4 h-4" /></>
+                      <>Next <ArrowRight className="w-4 h-4" /></>
                     ) : (
-                      <>إنهاء الاختبار <Sparkles className="w-4 h-4" /></>
+                      <>Finish Test <Sparkles className="w-4 h-4" /></>
                     )}
                   </Button>
                 </motion.div>
               )}
 
-              {/* Step 3: Result */}
               {step === 3 && (
                 <motion.div
                   key="result"
@@ -428,7 +416,7 @@ const Onboarding = () => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.3 }}
                     >
-                      <p className="text-muted-foreground mb-2">مستواك المقترح</p>
+                      <p className="text-muted-foreground mb-2">Your suggested level</p>
                       <div className={cn(
                         "inline-block px-6 py-3 rounded-2xl text-white font-bold text-2xl bg-gradient-to-r",
                         getLevelInfo(calculatedLevel).color
@@ -460,10 +448,10 @@ const Onboarding = () => {
                       onClick={handleFinish}
                       disabled={isSubmitting}
                     >
-                      {isSubmitting ? 'جاري الحفظ...' : (
+                      {isSubmitting ? 'Saving...' : (
                         <>
                           <Sparkles className="w-4 h-4" />
-                          ابدأ التعلم من {calculatedLevel}
+                          Start learning from {calculatedLevel}
                         </>
                       )}
                     </Button>
