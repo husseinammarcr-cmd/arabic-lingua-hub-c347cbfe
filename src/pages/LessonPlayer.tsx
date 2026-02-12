@@ -73,7 +73,6 @@ const clearProgress = () => {
   }
 };
 
-// Animation variants
 const slideVariants = {
   enter: (direction: number) => ({
     x: direction > 0 ? 50 : -50,
@@ -97,18 +96,15 @@ const LessonPlayer = () => {
   const { evaluateAchievements } = useEvaluateAchievements();
   const prefersReducedMotion = usePrefersReducedMotion();
   
-  // Use refs to track initialization
   const initializedRef = useRef(false);
   const lessonIdRef = useRef(lessonId);
 
-  // Show interstitial ad when lesson opens
   useEffect(() => {
     if (window.aclib) {
       window.aclib.runInterstitial({ zoneId: '10967390' });
     }
   }, []);
   
-  // Load saved progress or use defaults
   const savedProgress = lessonId ? loadProgress(lessonId) : null;
   
   const [section, setSection] = useState<LessonSection>(savedProgress?.section || 'learn');
@@ -117,7 +113,7 @@ const LessonPlayer = () => {
   const [quizIndex, setQuizIndex] = useState(savedProgress?.quizIndex || 0);
   const [hearts, setHearts] = useState(savedProgress?.hearts ?? 5);
   const [xpEarned, setXpEarned] = useState(savedProgress?.xpEarned || 0);
-  const [hintPenalties, setHintPenalties] = useState(0); // Track total hint penalties
+  const [hintPenalties, setHintPenalties] = useState(0);
   const [quizScore, setQuizScore] = useState(savedProgress?.quizScore || 0);
   const [quizTotal, setQuizTotal] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
@@ -130,7 +126,6 @@ const LessonPlayer = () => {
   const lessonData = getLessonById(lessonId || '');
   const lessonContent = getLessonContent(lessonId || '');
 
-  // Save progress whenever state changes
   useEffect(() => {
     if (lessonId && !isComplete && initializedRef.current) {
       saveProgress({
@@ -146,12 +141,10 @@ const LessonPlayer = () => {
     }
   }, [lessonId, section, learnIndex, practiceIndex, quizIndex, hearts, xpEarned, quizScore, isComplete]);
 
-  // Mark as initialized after first render
   useEffect(() => {
     initializedRef.current = true;
   }, []);
 
-  // Reset state if lessonId changes
   useEffect(() => {
     if (lessonId !== lessonIdRef.current) {
       lessonIdRef.current = lessonId;
@@ -167,14 +160,12 @@ const LessonPlayer = () => {
     }
   }, [lessonId]);
 
-  // Auth redirect
   useEffect(() => {
     if (!isLoading && !user) {
       navigate('/auth');
     }
   }, [user, isLoading, navigate]);
 
-  // Calculate pass status - use lesson's passing score or default to 50%
   const passingThreshold = lessonContent?.passingScore ?? 50;
   
   const calculatePassed = useCallback(() => {
@@ -182,10 +173,8 @@ const LessonPlayer = () => {
     return (quizScore / quizTotal) * 100 >= passingThreshold;
   }, [lessonContent, quizScore, quizTotal, passingThreshold]);
 
-  // Ref to track the save timeout
   const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   
-  // Cleanup timeout on unmount
   useEffect(() => {
     return () => {
       if (saveTimeoutRef.current) {
@@ -194,7 +183,6 @@ const LessonPlayer = () => {
     };
   }, []);
 
-  // Save to DB when lesson completes (only if passed)
   useEffect(() => {
     if (isComplete && lessonId && lessonData && !isSaving && !hasSaved) {
       const passed = calculatePassed();
@@ -205,7 +193,7 @@ const LessonPlayer = () => {
       }
       
       setIsSaving(true);
-      setSaveError(false); // Reset error state before attempting save
+      setSaveError(false);
       clearProgress();
       setShowConfetti(true);
       
@@ -216,12 +204,10 @@ const LessonPlayer = () => {
         netXp: totalXp - hintPenalties
       });
       
-      // Clear any existing timeout
       if (saveTimeoutRef.current) {
         clearTimeout(saveTimeoutRef.current);
       }
       
-      // Set new timeout
       saveTimeoutRef.current = setTimeout(() => {
         if (!hasSaved) {
           setIsSaving(false);
@@ -268,7 +254,7 @@ const LessonPlayer = () => {
           animate={{ opacity: [0.5, 1, 0.5] }}
           transition={{ duration: 1.5, repeat: Infinity }}
         >
-          جاري التحميل...
+          Loading...
         </motion.div>
       </div>
     );
@@ -276,12 +262,12 @@ const LessonPlayer = () => {
 
   if (!lessonData) {
     return (
-      <div className="min-h-screen bg-background flex flex-col items-center justify-center" dir="rtl">
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-foreground mb-4">الدرس غير موجود</h2>
+          <h2 className="text-2xl font-bold text-foreground mb-4">Lesson Not Found</h2>
           <Button type="button" onClick={() => navigate('/courses')}>
-            <ChevronRight className="w-4 h-4 ml-2" />
-            العودة للمستويات
+            <ChevronRight className="w-4 h-4 mr-2" />
+            Back to Levels
           </Button>
         </div>
       </div>
@@ -290,7 +276,7 @@ const LessonPlayer = () => {
 
   if (!lessonContent) {
     return (
-      <div className="min-h-screen bg-background flex flex-col items-center justify-center" dir="rtl">
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center">
         <div className="text-center max-w-md mx-auto px-4">
           <motion.div 
             className="w-20 h-20 mx-auto mb-6 rounded-full bg-primary/10 flex items-center justify-center"
@@ -300,11 +286,11 @@ const LessonPlayer = () => {
           >
             <Star className="w-10 h-10 text-primary" />
           </motion.div>
-          <h2 className="text-2xl font-bold text-foreground mb-2">{lessonData.lesson.titleAr}</h2>
-          <p className="text-muted-foreground mb-6">هذا الدرس قيد الإعداد. سيتم إضافة المحتوى قريباً!</p>
+          <h2 className="text-2xl font-bold text-foreground mb-2">{lessonData.lesson.titleEn}</h2>
+          <p className="text-muted-foreground mb-6">This lesson is being prepared. Content will be added soon!</p>
           <Button type="button" onClick={() => navigate(`/courses/${lessonData.level.code.toLowerCase()}/${lessonData.unit.id}`)}>
-            <ChevronRight className="w-4 h-4 ml-2" />
-            العودة للوحدة
+            <ChevronRight className="w-4 h-4 mr-2" />
+            Back to Unit
           </Button>
         </div>
       </div>
@@ -371,14 +357,11 @@ const LessonPlayer = () => {
   };
 
   const handlePracticeAnswer = (isCorrect: boolean, hintPenalty: number = 0) => {
-    // Track hint penalties regardless of answer correctness (will be deducted from total XP)
     if (hintPenalty > 0) {
-      console.log('[LessonPlayer] Adding hint penalty:', hintPenalty);
       setHintPenalties(prev => prev + hintPenalty);
     }
     
     if (isCorrect) {
-      // Award full XP for correct answer
       setXpEarned(prev => prev + 3);
     } else {
       setHearts(prev => Math.max(0, prev - 1));
@@ -396,16 +379,13 @@ const LessonPlayer = () => {
   };
 
   const handleQuizAnswer = (isCorrect: boolean, hintPenalty: number = 0) => {
-    // Track hint penalties regardless of answer correctness (will be deducted from total XP)
     if (hintPenalty > 0) {
-      console.log('[LessonPlayer] Adding quiz hint penalty:', hintPenalty);
       setHintPenalties(prev => prev + hintPenalty);
     }
     
     const currentQuiz = lessonContent.quiz[quizIndex];
     if (isCorrect) {
       setQuizScore(prev => prev + currentQuiz.points);
-      // Award full XP for correct answer
       setXpEarned(prev => prev + 5);
     } else {
       setHearts(prev => Math.max(0, prev - 1));
@@ -432,7 +412,7 @@ const LessonPlayer = () => {
     const scorePercent = quizTotal > 0 ? Math.round((quizScore / quizTotal) * 100) : 0;
     
     return (
-      <div className="min-h-screen bg-gradient-hero flex flex-col items-center justify-center relative" dir="rtl">
+      <div className="min-h-screen bg-gradient-hero flex flex-col items-center justify-center relative">
         <MiniConfetti trigger={showConfetti && passed} onComplete={() => setShowConfetti(false)} />
         
         <motion.div 
@@ -453,12 +433,12 @@ const LessonPlayer = () => {
             <Trophy className={cn("w-12 h-12", passed ? "text-primary-foreground" : "text-destructive")} />
           </motion.div>
           <h2 className="text-3xl font-bold text-foreground mb-2">
-            {passed ? 'أحسنت!' : 'حاول مرة أخرى'}
+            {passed ? 'Well Done!' : 'Try Again'}
           </h2>
           <p className="text-muted-foreground mb-6">
             {passed 
-              ? 'لقد أكملت الدرس بنجاح' 
-              : `حصلت على ${scorePercent}% - تحتاج ${passingThreshold}% للنجاح`}
+              ? 'You have completed the lesson successfully' 
+              : `You scored ${scorePercent}% — you need ${passingThreshold}% to pass`}
           </p>
           
           <Card className="mb-6">
@@ -477,7 +457,7 @@ const LessonPlayer = () => {
                     <Star className={cn("w-6 h-6", passed && "fill-current")} />
                     <span>{passed ? `+${totalXp}` : '0'}</span>
                   </div>
-                  <p className="text-sm text-muted-foreground">نقاط XP</p>
+                  <p className="text-sm text-muted-foreground">XP Points</p>
                 </motion.div>
                 <motion.div 
                   className="text-center"
@@ -492,7 +472,7 @@ const LessonPlayer = () => {
                     <ClipboardCheck className="w-6 h-6" />
                     <span>{scorePercent}%</span>
                   </div>
-                  <p className="text-sm text-muted-foreground">نتيجة الاختبار</p>
+                  <p className="text-sm text-muted-foreground">Quiz Score</p>
                 </motion.div>
                 <motion.div 
                   className="text-center"
@@ -504,7 +484,7 @@ const LessonPlayer = () => {
                     <Heart className="w-6 h-6 fill-current" />
                     <span>{hearts}</span>
                   </div>
-                  <p className="text-sm text-muted-foreground">قلوب متبقية</p>
+                  <p className="text-sm text-muted-foreground">Hearts Left</p>
                 </motion.div>
               </div>
             </CardContent>
@@ -516,7 +496,7 @@ const LessonPlayer = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
-              حدث خطأ في حفظ التقدم
+              Error saving progress
             </motion.div>
           )}
 
@@ -531,24 +511,24 @@ const LessonPlayer = () => {
                 {saveError ? (
                   <div className="flex gap-2">
                     <Button type="button" variant="outline" size="lg" onClick={handleRetrySave} className="flex-1">
-                      إعادة المحاولة
+                      Retry
                     </Button>
                     <Button type="button" variant="hero" size="lg" onClick={handleBackToLessons} className="flex-1">
-                      متابعة
+                      Continue
                     </Button>
                   </div>
                 ) : isSaving ? (
                   <Button type="button" variant="hero" size="xl" className="w-full" disabled>
-                    <Loader2 className="w-4 h-4 ml-2 animate-spin" />
-                    جاري الحفظ...
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    Saving...
                   </Button>
                 ) : (
                   <>
                     <Button type="button" variant="hero" size="xl" className="w-full" onClick={handleBackToLessons}>
-                      العودة إلى الدروس
+                      Back to Lessons
                     </Button>
                     <Button type="button" variant="outline" size="lg" className="w-full" onClick={handleNextLesson}>
-                      ابدأ الدرس التالي
+                      Start Next Lesson
                     </Button>
                   </>
                 )}
@@ -556,10 +536,10 @@ const LessonPlayer = () => {
             ) : (
               <>
                 <Button type="button" variant="hero" size="xl" className="w-full" onClick={handleRetry}>
-                  حاول مرة أخرى
+                  Try Again
                 </Button>
                 <Button type="button" variant="outline" size="lg" className="w-full" onClick={handleBackToUnit}>
-                  العودة للوحدة
+                  Back to Unit
                 </Button>
               </>
             )}
@@ -569,17 +549,15 @@ const LessonPlayer = () => {
     );
   }
 
-  // Generate stable keys for exercises
   const practiceExerciseKey = `${lessonId}-practice-${practiceIndex}`;
   const quizExerciseKey = `${lessonId}-quiz-${quizIndex}`;
 
-  // Animated section tabs
   const renderSectionTabs = () => (
     <div className="flex gap-2 mb-4 justify-center">
       {[
-        { key: 'learn', icon: BookOpen, label: 'تعلم' },
-        { key: 'practice', icon: Dumbbell, label: 'تدريب' },
-        { key: 'quiz', icon: ClipboardCheck, label: 'اختبار' }
+        { key: 'learn', icon: BookOpen, label: 'Learn' },
+        { key: 'practice', icon: Dumbbell, label: 'Practice' },
+        { key: 'quiz', icon: ClipboardCheck, label: 'Quiz' }
       ].map((tab, index) => (
         <motion.div 
           key={tab.key}
@@ -604,7 +582,6 @@ const LessonPlayer = () => {
     </div>
   );
 
-  // Learn section content with animations
   const renderLearnSection = () => {
     const isVocab = learnIndex < lessonContent.vocab.length;
     const item = isVocab 
@@ -628,7 +605,7 @@ const LessonPlayer = () => {
                 {isVocab ? (
                   <>
                     <div className="flex items-center justify-center gap-3 mb-4">
-                      <p className="text-4xl font-bold text-primary ltr-text">
+                      <p className="text-4xl font-bold text-primary">
                         {(item as VocabItem).english}
                       </p>
                       <AudioButton 
@@ -647,7 +624,7 @@ const LessonPlayer = () => {
                         transition={{ delay: 0.2 }}
                       >
                         <div className="flex items-center justify-center gap-2">
-                          <p className="text-lg text-muted-foreground ltr-text">{(item as VocabItem).example}</p>
+                          <p className="text-lg text-muted-foreground">{(item as VocabItem).example}</p>
                           <AudioButton 
                             text={(item as VocabItem).example || ''} 
                             size="sm"
@@ -661,7 +638,7 @@ const LessonPlayer = () => {
                 ) : (
                   <>
                     <div className="flex items-center justify-center gap-3 mb-4">
-                      <p className="text-2xl font-bold text-primary ltr-text">
+                      <p className="text-2xl font-bold text-primary">
                         {(item as SentenceItem).english}
                       </p>
                       <AudioButton 
@@ -685,15 +662,14 @@ const LessonPlayer = () => {
 
         <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
           <Button type="button" variant="hero" size="xl" className="w-full" onClick={handleLearnNext}>
-            {learnIndex < lessonContent.vocab.length + lessonContent.sentences.length - 1 ? 'التالي' : 'ابدأ التدريب'}
-            <ChevronLeft className="w-5 h-5 mr-2" />
+            {learnIndex < lessonContent.vocab.length + lessonContent.sentences.length - 1 ? 'Next' : 'Start Practice'}
+            <ChevronRight className="w-5 h-5 ml-2" />
           </Button>
         </motion.div>
       </div>
     );
   };
 
-  // Practice section
   const renderPracticeSection = () => {
     const exercise = lessonContent.exercises[practiceIndex];
     return (
@@ -726,7 +702,6 @@ const LessonPlayer = () => {
     );
   };
 
-  // Quiz section
   const renderQuizSection = () => {
     const quiz = lessonContent.quiz[quizIndex];
     return (
@@ -760,8 +735,7 @@ const LessonPlayer = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col" dir="rtl">
-      {/* Header with animated progress */}
+    <div className="min-h-screen bg-background flex flex-col">
       <header className="sticky top-0 z-50 bg-background border-b border-border px-4 py-3">
         <div className="flex items-center gap-4 max-w-2xl mx-auto">
           <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
@@ -785,7 +759,6 @@ const LessonPlayer = () => {
         </div>
       </header>
 
-      {/* Main content */}
       <main className="flex-1 container mx-auto px-4 py-6 max-w-2xl">
         {renderSectionTabs()}
         

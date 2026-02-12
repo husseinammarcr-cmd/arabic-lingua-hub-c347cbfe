@@ -5,120 +5,120 @@ import Header from '@/components/Header';
 const TermsAndConditions = () => {
   const sections = [
     {
-      title: 'قبول الشروط',
-      content: `باستخدامك لمنصة LingoArab، فإنك توافق على الالتزام بهذه الشروط والأحكام. إذا كنت لا توافق على أي جزء من هذه الشروط، يرجى عدم استخدام المنصة.
+      title: 'Acceptance of Terms',
+      content: `By using the Lingo Spanish platform, you agree to comply with these terms and conditions. If you do not agree with any part of these terms, please do not use the platform.
 
-تسري هذه الشروط على جميع المستخدمين، بما في ذلك الزوار والمستخدمين المسجلين. نحتفظ بالحق في تعديل هذه الشروط في أي وقت، وسيتم إخطارك بأي تغييرات جوهرية.
+These terms apply to all users, including visitors and registered users. We reserve the right to modify these terms at any time, and you will be notified of any material changes.
 
-استمرارك في استخدام المنصة بعد نشر التغييرات يعني قبولك للشروط المحدثة.`,
+Your continued use of the platform after changes are published constitutes acceptance of the updated terms.`,
     },
     {
-      title: 'حسابات المستخدمين',
-      content: `**إنشاء الحساب:**
-• يجب أن تكون المعلومات المقدمة عند التسجيل صحيحة ودقيقة
-• أنت مسؤول عن الحفاظ على سرية بيانات تسجيل الدخول الخاصة بك
-• يجب أن يكون عمرك 13 عاماً على الأقل لاستخدام المنصة
-• الحساب الواحد مخصص لمستخدم واحد فقط
+      title: 'User Accounts',
+      content: `**Account Creation:**
+• Information provided during registration must be accurate and truthful
+• You are responsible for maintaining the confidentiality of your login credentials
+• You must be at least 13 years old to use the platform
+• Each account is intended for a single user only
 
-**أمان الحساب:**
-• أنت مسؤول عن جميع الأنشطة التي تتم من خلال حسابك
-• يجب إبلاغنا فوراً عن أي استخدام غير مصرح به لحسابك
-• نحتفظ بالحق في تعليق أو إنهاء الحسابات التي تنتهك هذه الشروط`,
+**Account Security:**
+• You are responsible for all activities that occur through your account
+• You must notify us immediately of any unauthorised use of your account
+• We reserve the right to suspend or terminate accounts that violate these terms`,
     },
     {
-      title: 'الاستخدام المقبول',
-      content: `عند استخدام LingoArab، أنت توافق على:
+      title: 'Acceptable Use',
+      content: `When using Lingo Spanish, you agree to:
 
-**ما يجب عليك فعله:**
-• استخدام المنصة للأغراض التعليمية المشروعة فقط
-• احترام حقوق المستخدمين الآخرين
-• الحفاظ على بيئة تعليمية إيجابية
+**What you should do:**
+• Use the platform for legitimate educational purposes only
+• Respect the rights of other users
+• Maintain a positive learning environment
 
-**ما يُحظر عليك:**
-• مشاركة محتوى مسيء أو غير لائق
-• محاولة اختراق أو تعطيل أنظمة المنصة
-• استخدام المنصة لأي نشاط غير قانوني
-• نسخ أو توزيع محتوى المنصة بدون إذن
-• إنشاء حسابات متعددة أو انتحال هوية الآخرين
-• استخدام برامج آلية للتفاعل مع المنصة`,
+**What is prohibited:**
+• Sharing offensive or inappropriate content
+• Attempting to hack or disrupt platform systems
+• Using the platform for any illegal activity
+• Copying or distributing platform content without permission
+• Creating multiple accounts or impersonating others
+• Using automated software to interact with the platform`,
     },
     {
-      title: 'الملكية الفكرية',
-      content: `**حقوق LingoArab:**
-جميع المحتويات المتاحة على المنصة، بما في ذلك النصوص والصور والرسومات والأيقونات والتسجيلات الصوتية والبرمجيات، محمية بموجب قوانين حقوق الملكية الفكرية.
+      title: 'Intellectual Property',
+      content: `**Lingo Spanish Rights:**
+All content available on the platform, including text, images, graphics, icons, audio recordings, and software, is protected by intellectual property laws.
 
-**ما يُسمح لك به:**
-• استخدام المحتوى للتعلم الشخصي فقط
-• مشاركة روابط المنصة مع الآخرين
+**What you are permitted to do:**
+• Use the content for personal learning only
+• Share links to the platform with others
 
-**ما لا يُسمح لك به:**
-• نسخ أو استنساخ المحتوى التعليمي
-• بيع أو توزيع أي جزء من المحتوى
-• إزالة علامات حقوق النشر أو الملكية
-• استخدام علامتنا التجارية بدون إذن كتابي`,
+**What you are not permitted to do:**
+• Copy or reproduce educational content
+• Sell or distribute any part of the content
+• Remove copyright or ownership marks
+• Use our trademark without written permission`,
     },
     {
-      title: 'إنهاء الحسابات',
-      content: `**حقك في الإنهاء:**
-يمكنك إنهاء حسابك في أي وقت من خلال إعدادات الملف الشخصي أو التواصل معنا.
+      title: 'Account Termination',
+      content: `**Your right to terminate:**
+You can terminate your account at any time through your profile settings or by contacting us.
 
-**حقنا في الإنهاء:**
-نحتفظ بالحق في تعليق أو إنهاء حسابك في الحالات التالية:
-• انتهاك شروط الاستخدام
-• السلوك المسيء أو التخريبي
-• الاحتيال أو تقديم معلومات مضللة
-• عدم النشاط لفترة طويلة (أكثر من 24 شهراً)
+**Our right to terminate:**
+We reserve the right to suspend or terminate your account in the following cases:
+• Violation of terms of use
+• Abusive or destructive behaviour
+• Fraud or providing misleading information
+• Prolonged inactivity (more than 24 months)
 
-**بعد الإنهاء:**
-• سيتم حذف بياناتك الشخصية وفقاً لسياسة الخصوصية
-• لن تتمكن من استعادة تقدمك أو إنجازاتك
-• قد يتم الاحتفاظ ببعض البيانات للأغراض القانونية`,
+**After termination:**
+• Your personal data will be deleted in accordance with our Privacy Policy
+• You will not be able to recover your progress or achievements
+• Some data may be retained for legal purposes`,
     },
     {
-      title: 'حدود المسؤولية',
-      content: `**إخلاء المسؤولية:**
-يتم توفير منصة LingoArab "كما هي" دون أي ضمانات صريحة أو ضمنية. نحن لا نضمن:
-• أن الخدمة ستكون متاحة دائماً أو خالية من الأخطاء
-• دقة أو اكتمال جميع المحتويات التعليمية
-• تحقيق نتائج تعليمية محددة
+      title: 'Limitation of Liability',
+      content: `**Disclaimer:**
+The Lingo Spanish platform is provided "as is" without any express or implied warranties. We do not guarantee:
+• That the service will always be available or error-free
+• The accuracy or completeness of all educational content
+• Achievement of specific learning outcomes
 
-**حدود المسؤولية:**
-لن نكون مسؤولين عن:
-• أي أضرار مباشرة أو غير مباشرة ناتجة عن استخدام المنصة
-• فقدان البيانات أو انقطاع الخدمة
-• أفعال المستخدمين الآخرين
+**Limitations of liability:**
+We shall not be liable for:
+• Any direct or indirect damages resulting from use of the platform
+• Loss of data or service interruption
+• Actions of other users
 
-**الاستثناءات:**
-لا تنطبق هذه الحدود في الحالات التي لا يسمح بها القانون.`,
+**Exceptions:**
+These limitations do not apply in cases where the law does not permit.`,
     },
     {
-      title: 'التغييرات على الشروط',
-      content: `نحتفظ بالحق في تعديل هذه الشروط في أي وقت. عند إجراء تغييرات:
+      title: 'Changes to Terms',
+      content: `We reserve the right to modify these terms at any time. When changes are made:
 
-• سنقوم بتحديث تاريخ "آخر تعديل" أسفل هذه الصفحة
-• سنرسل إشعاراً للمستخدمين المسجلين عند إجراء تغييرات جوهرية
-• ستصبح التغييرات سارية فور نشرها على المنصة
+• We will update the "Last Updated" date at the bottom of this page
+• We will notify registered users of material changes
+• Changes become effective immediately upon publication on the platform
 
-**مسؤوليتك:**
-ننصحك بمراجعة هذه الشروط بشكل دوري. استمرارك في استخدام المنصة بعد نشر التغييرات يعني موافقتك على الشروط المحدثة.
+**Your responsibility:**
+We recommend reviewing these terms periodically. Your continued use of the platform after changes are published constitutes acceptance of the updated terms.
 
-إذا كنت لا توافق على التغييرات الجديدة، يمكنك إنهاء حسابك.`,
+If you do not agree with the new changes, you may terminate your account.`,
     },
     {
-      title: 'معلومات الاتصال',
-      content: `إذا كانت لديك أي أسئلة أو استفسارات حول شروط الاستخدام هذه، يمكنك التواصل معنا:
+      title: 'Contact Information',
+      content: `If you have any questions or enquiries about these terms of use, you can contact us:
 
-**البريد الإلكتروني:** legal@lingoarab.com
+**Email:** legal@lingospanish.com
 
-**صفحة التواصل:** يمكنك زيارة صفحة "تواصل معنا" على موقعنا
+**Contact Page:** You can visit our "Contact Us" page on our website
 
-سنبذل قصارى جهدنا للرد على استفساراتك في أقرب وقت ممكن.
+We will do our best to respond to your enquiries as soon as possible.
 
 ---
 
-**آخر تحديث:** يناير 2026
+**Last Updated:** January 2026
 
-شكراً لاختيارك LingoArab لتعلم اللغة الإنجليزية!`,
+Thank you for choosing Lingo Spanish to learn Spanish!`,
     },
   ];
 
@@ -127,7 +127,6 @@ const TermsAndConditions = () => {
       <Header showBack showAuthButton />
 
       <main className="container mx-auto px-4 py-12 max-w-3xl">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -138,14 +137,13 @@ const TermsAndConditions = () => {
             <FileText className="w-8 h-8 text-primary" />
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            شروط الاستخدام
+            Terms of Use
           </h1>
           <p className="text-muted-foreground text-lg">
-            يرجى قراءة هذه الشروط بعناية قبل استخدام المنصة
+            Please read these terms carefully before using the platform
           </p>
         </motion.div>
 
-        {/* Sections */}
         <div className="space-y-8">
           {sections.map((section, index) => (
             <motion.section
@@ -176,7 +174,6 @@ const TermsAndConditions = () => {
           ))}
         </div>
 
-        {/* Back to top */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -187,7 +184,7 @@ const TermsAndConditions = () => {
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="text-primary hover:underline text-sm"
           >
-            ↑ العودة للأعلى
+            ↑ Back to Top
           </button>
         </motion.div>
       </main>

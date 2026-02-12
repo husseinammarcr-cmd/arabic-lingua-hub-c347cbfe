@@ -1,14 +1,16 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { Book, ChevronLeft, GraduationCap, Star, Users, BookOpen, Mic, PenTool, MessageCircle, Globe, Award } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Book, ChevronRight, GraduationCap, Star, Users, BookOpen, Mic, PenTool, MessageCircle, Globe, Award } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { CURRICULUM } from '@/lib/curriculum';
 import { useAuth } from '@/contexts/AuthContext';
 import Header from '@/components/Header';
-// Get first lesson of each unit for public preview
+
+const SITE_URL = 'https://lingospanish.com';
+
 const getFreeLessons = () => {
   const freeLessons: Array<{
     levelCode: string;
@@ -75,12 +77,12 @@ const getLevelIcon = (code: string) => {
 
 const getLevelDescription = (code: string) => {
   const descriptions: Record<string, string> = {
-    A1: 'الأساسيات والتحيات اليومية',
-    A2: 'المحادثات البسيطة والمواقف اليومية',
-    B1: 'التعبير عن الآراء والمواضيع المألوفة',
-    B2: 'النقاشات المتقدمة والنصوص المعقدة',
-    C1: 'الطلاقة والاستخدام الأكاديمي',
-    C2: 'الإتقان والتعبير الاحترافي',
+    A1: 'Basics and everyday greetings',
+    A2: 'Simple conversations and daily situations',
+    B1: 'Expressing opinions and familiar topics',
+    B2: 'Advanced discussions and complex texts',
+    C1: 'Fluency and academic usage',
+    C2: 'Mastery and professional expression',
   };
   return descriptions[code] || '';
 };
@@ -90,30 +92,22 @@ const FreeLessons = () => {
   const freeLessons = getFreeLessons();
   const totalLessons = freeLessons.reduce((acc, level) => acc + level.units.length, 0);
 
-  // JSON-LD structured data
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: 'دروس إنجليزية مجانية - LingoArab',
-    description: 'تصفح دروس تعلم اللغة الإنجليزية المجانية للناطقين بالعربية. دروس تفاعلية من المستوى المبتدئ إلى المتقدم.',
-    url: 'https://lingoarab.com/free-lessons',
-    inLanguage: ['ar', 'en'],
-    provider: {
-      '@type': 'Organization',
-      name: 'LingoArab',
-      url: 'https://lingoarab.com',
-    },
+    name: 'Free Spanish Lessons — Lingo Spanish',
+    description: 'Browse free Spanish learning lessons designed for English speakers. Interactive lessons from beginner to advanced.',
+    url: `${SITE_URL}/free-lessons`,
+    inLanguage: ['en', 'es'],
+    provider: { '@type': 'Organization', name: 'Lingo Spanish', url: SITE_URL },
     hasPart: freeLessons.flatMap(level =>
       level.units.map(unit => ({
         '@type': 'Course',
-        name: `${unit.lessonTitleEn} - ${level.levelCode}`,
-        description: `${unit.unitTitleAr} - ${unit.lessonTitleAr}`,
-        provider: {
-          '@type': 'Organization',
-          name: 'LingoArab',
-        },
+        name: `${unit.lessonTitleEn} — ${level.levelCode}`,
+        description: `${unit.unitTitleEn}`,
+        provider: { '@type': 'Organization', name: 'Lingo Spanish' },
         educationalLevel: level.levelCode,
-        inLanguage: ['ar', 'en'],
+        inLanguage: ['en', 'es'],
       }))
     ),
   };
@@ -122,34 +116,21 @@ const FreeLessons = () => {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'الرئيسية',
-        item: 'https://lingoarab.com',
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: 'دروس مجانية',
-        item: 'https://lingoarab.com/free-lessons',
-      },
+      { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
+      { '@type': 'ListItem', position: 2, name: 'Free Lessons', item: `${SITE_URL}/free-lessons` },
     ],
   };
 
   return (
     <>
       <Helmet>
-        <title>دروس إنجليزية مجانية | تعلم الإنجليزية للعرب - LingoArab</title>
-        <meta 
-          name="description" 
-          content="استكشف دروسنا المجانية لتعلم اللغة الإنجليزية. دروس تفاعلية مصممة خصيصاً للناطقين بالعربية من المستوى A1 إلى C2." 
-        />
-        <meta name="keywords" content="دروس إنجليزية مجانية, تعلم الإنجليزية, تعليم اللغة الإنجليزية, دروس مجانية, LingoArab" />
-        <link rel="canonical" href="https://lingoarab.com/free-lessons" />
-        <meta property="og:title" content="دروس إنجليزية مجانية | LingoArab" />
-        <meta property="og:description" content="استكشف دروسنا المجانية لتعلم اللغة الإنجليزية. دروس تفاعلية مصممة للناطقين بالعربية." />
-        <meta property="og:url" content="https://lingoarab.com/free-lessons" />
+        <title>Free Spanish Lessons | Learn Spanish — Lingo Spanish</title>
+        <meta name="description" content="Explore our free interactive Spanish lessons designed for English speakers from level A1 to C2." />
+        <meta name="keywords" content="free Spanish lessons, learn Spanish, Spanish language, free lessons, Lingo Spanish" />
+        <link rel="canonical" href={`${SITE_URL}/free-lessons`} />
+        <meta property="og:title" content="Free Spanish Lessons | Lingo Spanish" />
+        <meta property="og:description" content="Explore our free interactive Spanish lessons designed for English speakers." />
+        <meta property="og:url" content={`${SITE_URL}/free-lessons`} />
         <meta property="og:type" content="website" />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
         <script type="application/ld+json">{JSON.stringify(breadcrumbJsonLd)}</script>
@@ -157,32 +138,31 @@ const FreeLessons = () => {
 
       <Header showBack showAuthButton />
       <div className="min-h-screen bg-background">
-        {/* Hero Section */}
         <section className="relative bg-gradient-to-br from-primary/10 via-background to-secondary/10 py-16 md:py-24">
           <div className="container mx-auto px-4">
             <div className="text-center max-w-3xl mx-auto">
               <Badge variant="secondary" className="mb-4">
-                <Book className="w-4 h-4 ml-2" />
-                {totalLessons} درس مجاني
+                <Book className="w-4 h-4 mr-2" />
+                {totalLessons} free lessons
               </Badge>
-              <h1 className="text-3xl md:text-5xl font-bold mb-6 bg-gradient-to-l from-primary to-primary/70 bg-clip-text text-transparent">
-                دروس إنجليزية مجانية
+              <h1 className="text-3xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                Free Spanish Lessons
               </h1>
               <p className="text-lg text-muted-foreground mb-8">
-                استكشف عينة من دروسنا التفاعلية المصممة خصيصاً للناطقين بالعربية.
-                ابدأ رحلتك في تعلم الإنجليزية اليوم!
+                Explore a sample of our interactive lessons designed for English speakers.
+                Start your Spanish learning journey today!
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Link to={user ? "/app/courses" : "/auth"}>
                   <Button size="lg" className="gap-2">
                     <GraduationCap className="w-5 h-5" />
-                    {user ? "استمر في التعلم" : "ابدأ التعلم مجاناً"}
+                    {user ? "Continue Learning" : "Start Learning for Free"}
                   </Button>
                 </Link>
                 <Link to="/placement-test">
                   <Button size="lg" variant="outline" className="gap-2">
-                    حدد مستواك
-                    <ChevronLeft className="w-5 h-5" />
+                    Find Your Level
+                    <ChevronRight className="w-5 h-5" />
                   </Button>
                 </Link>
               </div>
@@ -190,30 +170,28 @@ const FreeLessons = () => {
           </div>
         </section>
 
-        {/* Stats Section */}
         <section className="py-8 border-b">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-3 gap-4 max-w-2xl mx-auto text-center">
               <div>
                 <div className="text-2xl md:text-3xl font-bold text-primary">{CURRICULUM.length}</div>
-                <div className="text-sm text-muted-foreground">مستويات CEFR</div>
+                <div className="text-sm text-muted-foreground">CEFR Levels</div>
               </div>
               <div>
                 <div className="text-2xl md:text-3xl font-bold text-primary">{totalLessons}</div>
-                <div className="text-sm text-muted-foreground">درس مجاني</div>
+                <div className="text-sm text-muted-foreground">Free Lessons</div>
               </div>
               <div>
                 <div className="text-2xl md:text-3xl font-bold text-primary">100%</div>
-                <div className="text-sm text-muted-foreground">مجاني</div>
+                <div className="text-sm text-muted-foreground">Free</div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Lessons by Level - Accordion */}
         <section className="py-12 md:py-16">
           <div className="container mx-auto px-4 max-w-4xl">
-            <h2 className="text-2xl font-bold text-center mb-8">تصفح الدروس حسب المستوى</h2>
+            <h2 className="text-2xl font-bold text-center mb-8">Browse Lessons by Level</h2>
             <Accordion type="single" collapsible className="space-y-3">
               {freeLessons.map((level) => (
                 <AccordionItem 
@@ -226,13 +204,13 @@ const FreeLessons = () => {
                       <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${getLevelGradient(level.levelColor)} flex items-center justify-center shrink-0 shadow-md`}>
                         {getLevelIcon(level.levelCode)}
                       </div>
-                      <div className="text-right flex-1">
-                        <p className="font-bold text-base">{level.levelTitleAr}</p>
-                        <p className="text-xs text-muted-foreground ltr-text">{level.levelTitleEn}</p>
+                      <div className="text-left flex-1">
+                        <p className="font-bold text-base">{level.levelTitleEn}</p>
+                        <p className="text-xs text-muted-foreground">{level.levelTitleAr}</p>
                         <p className="text-xs text-muted-foreground mt-0.5">{getLevelDescription(level.levelCode)}</p>
                       </div>
                       <Badge variant="outline" className="shrink-0">
-                        {level.units.length} درس
+                        {level.units.length} lessons
                       </Badge>
                     </div>
                   </AccordionTrigger>
@@ -251,9 +229,9 @@ const FreeLessons = () => {
                               </div>
                               <div className="flex-1 min-w-0">
                                 <p className="font-medium text-sm group-hover:text-primary transition-colors truncate">
-                                  {unit.unitTitleAr}
+                                  {unit.unitTitleEn}
                                 </p>
-                                <p className="text-xs text-muted-foreground truncate ltr-text">
+                                <p className="text-xs text-muted-foreground truncate">
                                   {unit.lessonTitleEn}
                                 </p>
                               </div>
@@ -273,24 +251,23 @@ const FreeLessons = () => {
           </div>
         </section>
 
-        {/* CTA Section */}
         <section className="py-16 bg-gradient-to-br from-primary/5 to-secondary/5">
           <div className="container mx-auto px-4">
             <Card className="max-w-2xl mx-auto text-center p-8">
               <Users className="w-12 h-12 mx-auto mb-4 text-primary" />
               <h2 className="text-2xl font-bold mb-4">
-                انضم إلى آلاف المتعلمين
+                Join Thousands of Learners
               </h2>
               <p className="text-muted-foreground mb-6">
-                سجّل الآن للوصول إلى جميع الدروس، تتبع تقدمك، واكسب نقاط XP!
+                Sign up now to access all lessons, track your progress, and earn XP points!
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Link to={user ? "/app/courses" : "/auth"}>
-                  <Button size="lg">{user ? "استمر في التعلم" : "إنشاء حساب مجاني"}</Button>
+                  <Button size="lg">{user ? "Continue Learning" : "Create a Free Account"}</Button>
                 </Link>
                 <Link to={user ? "/app/courses" : "/courses"}>
                   <Button size="lg" variant="outline">
-                    استكشف المنهج الكامل
+                    Explore the Full Curriculum
                   </Button>
                 </Link>
               </div>

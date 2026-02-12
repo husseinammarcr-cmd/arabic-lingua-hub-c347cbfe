@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 const CONSENT_KEY = 'cookie-consent';
 
 interface CookiePreferences {
-  essential: boolean; // Always true, cannot be disabled
+  essential: boolean;
   analytics: boolean;
   advertising: boolean;
 }
@@ -24,10 +24,8 @@ const CookieConsentBanner = () => {
   const [preferences, setPreferences] = useState<CookiePreferences>(defaultPreferences);
 
   useEffect(() => {
-    // Check if user has already made a choice
     const savedConsent = localStorage.getItem(CONSENT_KEY);
     if (!savedConsent) {
-      // Small delay to prevent banner from showing immediately on page load
       const timer = setTimeout(() => setShowBanner(true), 1500);
       return () => clearTimeout(timer);
     }
@@ -48,7 +46,6 @@ const CookieConsentBanner = () => {
   };
 
   const handleDeclineAll = () => {
-    // Only essential cookies (which are always on)
     savePreferences(defaultPreferences);
   };
 
@@ -60,25 +57,22 @@ const CookieConsentBanner = () => {
     {
       id: 'essential' as const,
       icon: Shield,
-      title: 'ملفات تعريف الارتباط الضرورية',
-      titleEn: 'Essential Cookies',
-      description: 'ضرورية لعمل الموقع بشكل صحيح. تشمل تسجيل الدخول وحفظ التفضيلات.',
+      title: 'Essential Cookies',
+      description: 'Necessary for the website to function properly. Includes login and saving preferences.',
       required: true,
     },
     {
       id: 'analytics' as const,
       icon: BarChart3,
-      title: 'ملفات التحليلات',
-      titleEn: 'Analytics Cookies',
-      description: 'تساعدنا على فهم كيفية استخدام الزوار للموقع لتحسين التجربة.',
+      title: 'Analytics Cookies',
+      description: 'Help us understand how visitors use the website to improve the experience.',
       required: false,
     },
     {
       id: 'advertising' as const,
       icon: Megaphone,
-      title: 'ملفات الإعلانات',
-      titleEn: 'Advertising Cookies',
-      description: 'تُستخدم لعرض إعلانات مخصصة بناءً على اهتماماتك.',
+      title: 'Advertising Cookies',
+      description: 'Used to show personalised adverts based on your interests.',
       required: false,
     },
   ];
@@ -92,46 +86,40 @@ const CookieConsentBanner = () => {
           exit={{ y: 100, opacity: 0 }}
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
           className="fixed bottom-0 left-0 right-0 z-[100] p-4 md:p-6"
-          dir="rtl"
         >
           <div className="container mx-auto max-w-4xl">
             <div className="relative bg-card/95 backdrop-blur-xl border border-border rounded-2xl shadow-elevated overflow-hidden">
-              {/* Close button */}
               <button
                 onClick={handleDeclineAll}
-                className="absolute top-3 left-3 p-1.5 rounded-full hover:bg-muted transition-colors text-muted-foreground hover:text-foreground z-10"
-                aria-label="إغلاق"
+                className="absolute top-3 right-3 p-1.5 rounded-full hover:bg-muted transition-colors text-muted-foreground hover:text-foreground z-10"
+                aria-label="Close"
               >
                 <X className="w-4 h-4" />
               </button>
 
-              {/* Main content */}
               <div className="p-4 md:p-6">
                 <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
-                  {/* Icon */}
                   <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
                     <Cookie className="w-6 h-6 text-primary" />
                   </div>
 
-                  {/* Content */}
-                  <div className="flex-1 pl-8 md:pl-0">
+                  <div className="flex-1 pr-8 md:pr-0">
                     <h3 className="text-lg font-bold text-foreground mb-1">
-                      نحن نستخدم ملفات تعريف الارتباط 🍪
+                      We use cookies 🍪
                     </h3>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      نستخدم ملفات تعريف الارتباط لتحسين تجربتك وتحليل استخدام الموقع. 
-                      يمكنك قراءة المزيد في{' '}
+                      We use cookies to improve your experience and analyse site usage. 
+                      You can read more in our{' '}
                       <a 
                         href="/cookie-policy" 
                         className="text-primary hover:underline font-medium"
                       >
-                        سياسة ملفات الارتباط
+                        Cookie Policy
                       </a>
                       .
                     </p>
                   </div>
 
-                  {/* Actions */}
                   <div className="flex items-center gap-2 w-full md:w-auto flex-wrap">
                     <Button
                       variant="ghost"
@@ -139,7 +127,7 @@ const CookieConsentBanner = () => {
                       onClick={() => setShowSettings(!showSettings)}
                       className="flex-1 md:flex-none gap-1"
                     >
-                      إعدادات
+                      Settings
                       {showSettings ? (
                         <ChevronUp className="w-4 h-4" />
                       ) : (
@@ -152,7 +140,7 @@ const CookieConsentBanner = () => {
                       onClick={handleDeclineAll}
                       className="flex-1 md:flex-none"
                     >
-                      رفض الكل
+                      Decline All
                     </Button>
                     <Button
                       variant="default"
@@ -160,13 +148,12 @@ const CookieConsentBanner = () => {
                       onClick={handleAcceptAll}
                       className="flex-1 md:flex-none"
                     >
-                      قبول الكل
+                      Accept All
                     </Button>
                   </div>
                 </div>
               </div>
 
-              {/* Settings Panel */}
               <AnimatePresence>
                 {showSettings && (
                   <motion.div
@@ -195,13 +182,10 @@ const CookieConsentBanner = () => {
                                   </h4>
                                   {cookie.required && (
                                     <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full">
-                                      مطلوب
+                                      Required
                                     </span>
                                   )}
                                 </div>
-                                <p className="text-xs text-muted-foreground ltr-text">
-                                  {cookie.titleEn}
-                                </p>
                                 <p className="text-sm text-muted-foreground mt-1">
                                   {cookie.description}
                                 </p>
@@ -226,14 +210,13 @@ const CookieConsentBanner = () => {
                         })}
                       </div>
 
-                      {/* Save button */}
                       <div className="mt-4 flex justify-end">
                         <Button
                           variant="default"
                           size="sm"
                           onClick={handleSavePreferences}
                         >
-                          حفظ التفضيلات
+                          Save Preferences
                         </Button>
                       </div>
                     </div>

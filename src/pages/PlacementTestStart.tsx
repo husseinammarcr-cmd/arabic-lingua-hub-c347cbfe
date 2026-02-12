@@ -34,7 +34,6 @@ const PlacementTestStart = () => {
     }
   }, [user, isLoading, navigate]);
 
-  // Load saved progress from localStorage
   useEffect(() => {
     const savedProgress = localStorage.getItem(`placement_test_${user?.id}`);
     if (savedProgress) {
@@ -44,7 +43,6 @@ const PlacementTestStart = () => {
     }
   }, [user?.id]);
 
-  // Save progress to localStorage
   useEffect(() => {
     if (user?.id && answers.length > 0) {
       localStorage.setItem(`placement_test_${user.id}`, JSON.stringify({
@@ -57,7 +55,7 @@ const PlacementTestStart = () => {
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
-        <div className="animate-pulse text-primary text-xl">جاري التحميل...</div>
+        <div className="animate-pulse text-primary text-xl">Loading...</div>
       </div>
     );
   }
@@ -76,7 +74,6 @@ const PlacementTestStart = () => {
 
     const isCorrect = selectedOption === currentQuestion.correctAnswer;
     
-    // Set feedback state and play sound
     if (isCorrect) {
       setFeedbackState('correct');
       playSuccess();
@@ -96,12 +93,10 @@ const PlacementTestStart = () => {
     setAnswers(updatedAnswers);
 
     if (isLastQuestion) {
-      // Submit test after animation
       setTimeout(async () => {
         await submitTest(updatedAnswers);
       }, 600);
     } else {
-      // Delay to show animation before moving to next question
       setTimeout(() => {
         setFeedbackState('idle');
         setCurrentIndex(prev => prev + 1);
@@ -126,7 +121,6 @@ const PlacementTestStart = () => {
       const score = finalAnswers.filter(a => a.isCorrect).length;
       const total = PLACEMENT_QUESTIONS.length;
       
-      // Calculate level breakdown - support all CEFR levels
       const breakdown: Record<string, { correct: number; total: number }> = {
         A1: { correct: 0, total: 0 },
         A2: { correct: 0, total: 0 },
@@ -144,7 +138,6 @@ const PlacementTestStart = () => {
         }
       });
 
-      // Determine suggested level based on percentage
       let suggestedLevel: 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2';
       const percentage = (score / total) * 100;
       
@@ -155,7 +148,6 @@ const PlacementTestStart = () => {
       else if (percentage >= 45) suggestedLevel = 'A2';
       else suggestedLevel = 'A1';
 
-      // Save to database
       const { error: testError } = await supabase
         .from('placement_tests')
         .insert([{
@@ -169,7 +161,6 @@ const PlacementTestStart = () => {
 
       if (testError) throw testError;
 
-      // Update profile
       const { error: profileError } = await supabase
         .from('profiles')
         .update({
@@ -183,16 +174,13 @@ const PlacementTestStart = () => {
 
       if (profileError) throw profileError;
 
-      // Clear saved progress
       localStorage.removeItem(`placement_test_${user.id}`);
 
-      // Show success message
-      toast.success('تم حفظ نتيجتك بنجاح! 🎉', {
-        description: `مستواك: ${suggestedLevel} - النتيجة: ${score}/${total}`,
+      toast.success('Your result has been saved! 🎉', {
+        description: `Your level: ${suggestedLevel} — Score: ${score}/${total}`,
         duration: 2000,
       });
 
-      // Refresh profile and navigate to results after a brief delay
       await refreshProfile();
       setTimeout(() => {
         navigate('/placement-test/result', { 
@@ -201,7 +189,7 @@ const PlacementTestStart = () => {
       }, 500);
     } catch (error) {
       console.error('Error submitting test:', error);
-      toast.error('حدث خطأ أثناء حفظ النتيجة');
+      toast.error('An error occurred whilst saving your result');
     } finally {
       setIsSubmitting(false);
     }
@@ -218,8 +206,7 @@ const PlacementTestStart = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background" dir="rtl">
-      {/* Header */}
+    <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b border-border">
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between mb-2">
@@ -229,8 +216,8 @@ const PlacementTestStart = () => {
               onClick={() => navigate('/placement-test')}
               disabled={isSubmitting}
             >
-              <ChevronRight className="w-4 h-4 ml-1" />
-              خروج
+              <ChevronLeft className="w-4 h-4 mr-1" />
+              Exit
             </Button>
             <span className="text-sm text-muted-foreground">
               {currentIndex + 1} / {PLACEMENT_QUESTIONS.length}
@@ -241,27 +228,23 @@ const PlacementTestStart = () => {
       </header>
 
       <main className="container mx-auto px-4 py-6 max-w-2xl">
-        {/* Question Card */}
         <Card className="mb-6">
           <CardContent className="p-6">
-            {/* Level badge */}
             <div className="flex items-center gap-2 mb-4">
               <span className={cn("text-xs font-bold px-2 py-1 rounded-full", getLevelBadgeColor(currentQuestion.level))}>
                 {currentQuestion.level}
               </span>
               <span className="text-xs text-muted-foreground">
-                {currentQuestion.type === 'vocabulary' && 'مفردات'}
-                {currentQuestion.type === 'grammar' && 'قواعد'}
-                {currentQuestion.type === 'reading' && 'فهم'}
+                {currentQuestion.type === 'vocabulary' && 'Vocabulary'}
+                {currentQuestion.type === 'grammar' && 'Grammar'}
+                {currentQuestion.type === 'reading' && 'Comprehension'}
               </span>
             </div>
 
-            {/* Question */}
             <h2 className="text-xl font-bold text-foreground mb-6 leading-relaxed">
               {currentQuestion.questionAr}
             </h2>
 
-            {/* Options */}
             <div className="space-y-3">
               {currentQuestion.options.map((option) => {
                 const isSelected = selectedOption === option.id;
@@ -276,19 +259,13 @@ const PlacementTestStart = () => {
                     onClick={() => handleSelectOption(option.id)}
                     disabled={isSubmitting || feedbackState !== 'idle'}
                     className={cn(
-                      "w-full p-4 rounded-xl border-2 text-right transition-all duration-200",
+                      "w-full p-4 rounded-xl border-2 text-left transition-all duration-200",
                       "hover:border-primary/50 hover:bg-primary/5",
-                      // Default selected state
                       isSelected && feedbackState === 'idle' && "border-primary bg-primary/10 shadow-md",
-                      // Not selected
                       !isSelected && feedbackState === 'idle' && "border-border bg-card",
-                      // Correct answer feedback - turquoise glow
                       showCorrectFeedback && "border-cyan-500 bg-cyan-500/20 shadow-lg shadow-cyan-500/30 animate-pulse",
-                      // Incorrect answer feedback - shake
                       showIncorrectFeedback && "border-red-400 bg-red-500/10 animate-[shake_0.5s_ease-in-out]",
-                      // Show correct answer when wrong
                       showCorrectHighlight && "border-cyan-500 bg-cyan-500/10",
-                      // Disabled state during feedback
                       feedbackState !== 'idle' && !isSelected && !showCorrectHighlight && "opacity-50"
                     )}
                   >
@@ -320,15 +297,14 @@ const PlacementTestStart = () => {
           </CardContent>
         </Card>
 
-        {/* Navigation */}
         <div className="flex items-center justify-between gap-4">
           <Button
             variant="outline"
             onClick={handlePrevious}
             disabled={currentIndex === 0 || isSubmitting}
           >
-            <ChevronRight className="w-4 h-4 ml-1" />
-            السابق
+            <ChevronLeft className="w-4 h-4 mr-1" />
+            Previous
           </Button>
 
           <Button
@@ -337,13 +313,13 @@ const PlacementTestStart = () => {
             disabled={!selectedOption || isSubmitting}
           >
             {isSubmitting ? (
-              'جاري الحفظ...'
+              'Saving...'
             ) : isLastQuestion ? (
-              'إنهاء الاختبار'
+              'Finish Test'
             ) : (
               <>
-                التالي
-                <ChevronLeft className="w-4 h-4" />
+                Next
+                <ChevronRight className="w-4 h-4" />
               </>
             )}
           </Button>

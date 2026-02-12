@@ -5,11 +5,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import { Lock, ArrowLeft, CheckCircle, XCircle } from 'lucide-react';
+import { Lock, ArrowRight, CheckCircle, XCircle } from 'lucide-react';
 import { z } from 'zod';
 import { supabase } from '@/integrations/supabase/client';
 
-const passwordSchema = z.string().min(6, 'كلمة المرور يجب أن تكون 6 أحرف على الأقل');
+const passwordSchema = z.string().min(6, 'Password must be at least 6 characters');
 
 const ResetPassword = () => {
   const [password, setPassword] = useState('');
@@ -21,13 +21,12 @@ const ResetPassword = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if we have access token in URL (from password reset email)
     const hashParams = new URLSearchParams(window.location.hash.substring(1));
     const accessToken = hashParams.get('access_token');
     const type = hashParams.get('type');
     
     if (!accessToken || type !== 'recovery') {
-      setError('رابط إعادة تعيين كلمة المرور غير صالح أو منتهي الصلاحية.');
+      setError('The password reset link is invalid or has expired.');
     }
   }, []);
 
@@ -38,13 +37,13 @@ const ResetPassword = () => {
       passwordSchema.parse(password);
     } catch (err) {
       if (err instanceof z.ZodError) {
-        toast({ title: 'خطأ', description: err.errors[0].message, variant: 'destructive' });
+        toast({ title: 'Error', description: err.errors[0].message, variant: 'destructive' });
         return;
       }
     }
 
     if (password !== confirmPassword) {
-      toast({ title: 'خطأ', description: 'كلمات المرور غير متطابقة', variant: 'destructive' });
+      toast({ title: 'Error', description: 'Passwords do not match', variant: 'destructive' });
       return;
     }
 
@@ -57,20 +56,19 @@ const ResetPassword = () => {
       
       setSuccess(true);
       toast({ 
-        title: 'تم تغيير كلمة المرور بنجاح! 🎉', 
-        description: 'يمكنك الآن تسجيل الدخول بكلمة المرور الجديدة' 
+        title: 'Password changed successfully! 🎉', 
+        description: 'You can now log in with your new password' 
       });
       
-      // Redirect to login after 3 seconds
       setTimeout(() => {
         navigate('/auth');
       }, 3000);
     } catch (error: any) {
       let errorMessage = error.message;
       if (error.message.includes('expired')) {
-        errorMessage = 'انتهت صلاحية رابط إعادة التعيين. يرجى طلب رابط جديد.';
+        errorMessage = 'The reset link has expired. Please request a new one.';
       }
-      toast({ title: 'خطأ', description: errorMessage, variant: 'destructive' });
+      toast({ title: 'Error', description: errorMessage, variant: 'destructive' });
     } finally {
       setLoading(false);
     }
@@ -78,14 +76,14 @@ const ResetPassword = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-hero flex items-center justify-center p-4" dir="rtl">
+      <div className="min-h-screen bg-gradient-hero flex items-center justify-center p-4">
         <Card className="w-full max-w-md">
           <CardContent className="pt-8 text-center">
             <XCircle className="w-16 h-16 text-destructive mx-auto mb-4" />
-            <h2 className="text-xl font-bold mb-2">رابط غير صالح</h2>
+            <h2 className="text-xl font-bold mb-2">Invalid Link</h2>
             <p className="text-muted-foreground mb-6">{error}</p>
             <Button variant="hero" asChild>
-              <Link to="/auth">طلب رابط جديد</Link>
+              <Link to="/auth">Request a new link</Link>
             </Button>
           </CardContent>
         </Card>
@@ -95,13 +93,13 @@ const ResetPassword = () => {
 
   if (success) {
     return (
-      <div className="min-h-screen bg-gradient-hero flex items-center justify-center p-4" dir="rtl">
+      <div className="min-h-screen bg-gradient-hero flex items-center justify-center p-4">
         <Card className="w-full max-w-md">
           <CardContent className="pt-8 text-center">
             <CheckCircle className="w-16 h-16 text-primary mx-auto mb-4" />
-            <h2 className="text-xl font-bold mb-2">تم بنجاح!</h2>
+            <h2 className="text-xl font-bold mb-2">Success!</h2>
             <p className="text-muted-foreground mb-6">
-              تم تغيير كلمة المرور بنجاح. جاري تحويلك لصفحة تسجيل الدخول...
+              Your password has been changed. Redirecting to login...
             </p>
           </CardContent>
         </Card>
@@ -110,27 +108,27 @@ const ResetPassword = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-hero flex items-center justify-center p-4" dir="rtl">
+    <div className="min-h-screen bg-gradient-hero flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <Link to="/" className="inline-block">
-            <CardTitle className="text-2xl font-bold text-primary">LingoArab</CardTitle>
+            <CardTitle className="text-2xl font-bold text-primary">Lingo Spanish</CardTitle>
           </Link>
-          <p className="text-muted-foreground mt-2">إنشاء كلمة مرور جديدة</p>
+          <p className="text-muted-foreground mt-2">Create a new password</p>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="password">كلمة المرور الجديدة</Label>
+              <Label htmlFor="password">New Password</Label>
               <div className="relative">
-                <Lock className="absolute right-3 top-3 h-4 w-4 text-muted-foreground" />
+                <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                 <Input 
                   id="password" 
                   type="password" 
                   value={password} 
                   onChange={(e) => setPassword(e.target.value)} 
                   placeholder="••••••••" 
-                  className="pr-10" 
+                  className="pl-10" 
                   minLength={6}
                   required
                 />
@@ -138,16 +136,16 @@ const ResetPassword = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="confirmPassword">تأكيد كلمة المرور</Label>
+              <Label htmlFor="confirmPassword">Confirm Password</Label>
               <div className="relative">
-                <Lock className="absolute right-3 top-3 h-4 w-4 text-muted-foreground" />
+                <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                 <Input 
                   id="confirmPassword" 
                   type="password" 
                   value={confirmPassword} 
                   onChange={(e) => setConfirmPassword(e.target.value)} 
                   placeholder="••••••••" 
-                  className="pr-10" 
+                  className="pl-10" 
                   minLength={6}
                   required
                 />
@@ -155,8 +153,8 @@ const ResetPassword = () => {
             </div>
 
             <Button type="submit" variant="hero" size="lg" className="w-full" disabled={loading}>
-              {loading ? 'جاري التحميل...' : 'تغيير كلمة المرور'}
-              <ArrowLeft className="w-4 h-4" />
+              {loading ? 'Loading...' : 'Change Password'}
+              <ArrowRight className="w-4 h-4" />
             </Button>
           </form>
         </CardContent>

@@ -5,107 +5,107 @@ import Header from '@/components/Header';
 const PrivacyPolicy = () => {
   const sections = [
     {
-      title: 'مقدمة',
-      content: `مرحباً بك في LingoArab. نحن نقدر ثقتك بنا ونلتزم بحماية خصوصيتك. توضح سياسة الخصوصية هذه كيفية جمعنا واستخدامنا وحمايتنا لمعلوماتك الشخصية عند استخدامك لمنصتنا التعليمية.
+      title: 'Introduction',
+      content: `Welcome to Lingo Spanish. We value your trust and are committed to protecting your privacy. This Privacy Policy explains how we collect, use, and protect your personal information when you use our learning platform.
 
-باستخدامك لمنصة LingoArab، فإنك توافق على جمع واستخدام المعلومات وفقاً لهذه السياسة. نحتفظ بالحق في تحديث هذه السياسة من وقت لآخر، وسنقوم بإخطارك بأي تغييرات جوهرية.`,
+By using the Lingo Spanish platform, you consent to the collection and use of information in accordance with this policy. We reserve the right to update this policy from time to time, and we will notify you of any material changes.`,
     },
     {
-      title: 'المعلومات التي نجمعها',
-      content: `نجمع أنواعاً مختلفة من المعلومات لتقديم خدماتنا وتحسينها:
+      title: 'Information We Collect',
+      content: `We collect different types of information to provide and improve our services:
 
-**المعلومات الشخصية:**
-• الاسم وعنوان البريد الإلكتروني عند إنشاء حسابك
-• صورة الملف الشخصي (اختياري)
-• البلد أو المنطقة
+**Personal Information:**
+• Name and email address when creating your account
+• Profile picture (optional)
+• Country or region
 
-**معلومات الاستخدام:**
-• تقدمك في الدروس والمستويات
-• نقاط الخبرة (XP) والإنجازات المكتسبة
-• سلسلة التعلم اليومية
-• الوقت المستغرق في التعلم
+**Usage Information:**
+• Your progress in lessons and levels
+• Experience points (XP) and achievements earned
+• Daily learning streak
+• Time spent learning
 
-**المعلومات التقنية:**
-• نوع الجهاز ونظام التشغيل
-• نوع المتصفح
-• عنوان IP (بشكل مجهول)`,
+**Technical Information:**
+• Device type and operating system
+• Browser type
+• IP address (anonymised)`,
     },
     {
-      title: 'كيف نستخدم معلوماتك',
-      content: `نستخدم المعلومات التي نجمعها للأغراض التالية:
+      title: 'How We Use Your Information',
+      content: `We use the information we collect for the following purposes:
 
-• **تقديم الخدمة:** لإنشاء وإدارة حسابك وتتبع تقدمك التعليمي
-• **تخصيص التجربة:** لتقديم محتوى مناسب لمستواك وأهدافك
-• **التواصل:** لإرسال إشعارات مهمة وتحديثات حول حسابك
-• **تحسين المنصة:** لتحليل أنماط الاستخدام وتحسين تجربة التعلم
-• **الأمان:** لحماية حسابك ومنع الاستخدام غير المصرح به
-• **لوحة المتصدرين:** لعرض ترتيبك مقارنة بالمتعلمين الآخرين (الاسم المعروض ونقاط XP فقط)`,
+• **Providing the service:** To create and manage your account and track your learning progress
+• **Personalising the experience:** To deliver content suited to your level and goals
+• **Communication:** To send important notifications and updates about your account
+• **Improving the platform:** To analyse usage patterns and improve the learning experience
+• **Security:** To protect your account and prevent unauthorised use
+• **Leaderboard:** To display your ranking compared to other learners (display name and XP only)`,
     },
     {
-      title: 'ملفات تعريف الارتباط والتتبع',
-      content: `نستخدم ملفات تعريف الارتباط وتقنيات مشابهة لتحسين تجربتك:
+      title: 'Cookies and Tracking',
+      content: `We use cookies and similar technologies to improve your experience:
 
-**ملفات تعريف الارتباط الضرورية:**
-تُستخدم للحفاظ على تسجيل دخولك وتذكر تفضيلاتك الأساسية.
+**Essential Cookies:**
+Used to keep you logged in and remember your basic preferences.
 
-**ملفات تعريف الارتباط التحليلية:**
-تساعدنا في فهم كيفية استخدام المتعلمين للمنصة لتحسين الخدمة.
+**Analytics Cookies:**
+Help us understand how learners use the platform to improve the service.
 
-**التخزين المحلي:**
-نستخدم التخزين المحلي في متصفحك لحفظ تفضيلاتك وتقدمك المؤقت.
+**Local Storage:**
+We use your browser's local storage to save your preferences and temporary progress.
 
-يمكنك التحكم في ملفات تعريف الارتباط من خلال إعدادات متصفحك، لكن تعطيلها قد يؤثر على بعض وظائف المنصة.`,
+You can control cookies through your browser settings, but disabling them may affect some platform functionality.`,
     },
     {
-      title: 'أمان البيانات',
-      content: `نتخذ إجراءات أمنية صارمة لحماية معلوماتك:
+      title: 'Data Security',
+      content: `We take strict security measures to protect your information:
 
-• **التشفير:** جميع البيانات المنقولة مشفرة باستخدام بروتوكول SSL/TLS
-• **التحكم في الوصول:** الوصول إلى بياناتك مقيد للموظفين المصرح لهم فقط
-• **المصادقة الآمنة:** نستخدم أنظمة مصادقة حديثة لحماية حسابك
-• **النسخ الاحتياطي:** نحتفظ بنسخ احتياطية منتظمة لضمان سلامة بياناتك
-• **المراقبة:** نراقب أنظمتنا باستمرار للكشف عن أي نشاط مشبوه
+• **Encryption:** All transmitted data is encrypted using SSL/TLS protocol
+• **Access Control:** Access to your data is restricted to authorised personnel only
+• **Secure Authentication:** We use modern authentication systems to protect your account
+• **Backup:** We maintain regular backups to ensure the safety of your data
+• **Monitoring:** We continuously monitor our systems to detect any suspicious activity
 
-رغم جهودنا، لا يمكن ضمان أمان البيانات بنسبة 100% عبر الإنترنت. نشجعك على استخدام كلمة مرور قوية وعدم مشاركتها.`,
+Despite our efforts, 100% data security cannot be guaranteed over the internet. We encourage you to use a strong password and not share it.`,
     },
     {
-      title: 'حقوق المستخدم',
-      content: `لديك الحقوق التالية فيما يتعلق ببياناتك الشخصية:
+      title: 'User Rights',
+      content: `You have the following rights regarding your personal data:
 
-• **الوصول:** يمكنك طلب نسخة من بياناتك الشخصية المحفوظة لدينا
-• **التصحيح:** يمكنك تحديث أو تصحيح معلوماتك من خلال إعدادات الملف الشخصي
-• **الحذف:** يمكنك طلب حذف حسابك وجميع البيانات المرتبطة به
-• **الاعتراض:** يمكنك الاعتراض على معالجة بياناتك لأغراض معينة
-• **نقل البيانات:** يمكنك طلب نقل بياناتك بصيغة قابلة للقراءة
+• **Access:** You can request a copy of the personal data we hold about you
+• **Correction:** You can update or correct your information through your profile settings
+• **Deletion:** You can request the deletion of your account and all associated data
+• **Objection:** You can object to the processing of your data for certain purposes
+• **Data Portability:** You can request the transfer of your data in a readable format
 
-لممارسة أي من هذه الحقوق، يرجى التواصل معنا عبر صفحة الاتصال.`,
+To exercise any of these rights, please contact us via our Contact page.`,
     },
     {
-      title: 'الخدمات الخارجية',
-      content: `قد نستخدم خدمات طرف ثالث موثوقة للمساعدة في تقديم خدماتنا:
+      title: 'Third-Party Services',
+      content: `We may use trusted third-party services to help provide our services:
 
-• **خدمات الاستضافة:** لتخزين البيانات بشكل آمن
-• **خدمات المصادقة:** لتسجيل الدخول الآمن (مثل Google)
-• **خدمات التحليلات:** لفهم استخدام المنصة وتحسينها
-• **خدمات البريد الإلكتروني:** لإرسال الإشعارات والتواصل معك
+• **Hosting Services:** For secure data storage
+• **Authentication Services:** For secure login (e.g. Google)
+• **Analytics Services:** To understand platform usage and improve it
+• **Email Services:** To send notifications and communicate with you
 
-نختار شركاءنا بعناية ونتأكد من التزامهم بمعايير الخصوصية والأمان. لا نبيع أو نؤجر معلوماتك الشخصية لأي طرف ثالث.`,
+We carefully choose our partners and ensure they comply with privacy and security standards. We do not sell or rent your personal information to any third party.`,
     },
     {
-      title: 'معلومات الاتصال',
-      content: `إذا كانت لديك أي أسئلة أو استفسارات حول سياسة الخصوصية هذه أو ممارساتنا المتعلقة بالبيانات، يمكنك التواصل معنا:
+      title: 'Contact Information',
+      content: `If you have any questions or enquiries about this Privacy Policy or our data practices, you can contact us:
 
-**البريد الإلكتروني:** privacy@lingoarab.com
+**Email:** privacy@lingospanish.com
 
-**صفحة التواصل:** يمكنك زيارة صفحة "تواصل معنا" على موقعنا
+**Contact Page:** You can visit our "Contact Us" page on our website
 
-سنبذل قصارى جهدنا للرد على استفساراتك خلال 48 ساعة عمل.
+We will do our best to respond to your enquiries within 48 working hours.
 
 ---
 
-**آخر تحديث:** يناير 2026
+**Last Updated:** January 2026
 
-نشكرك على ثقتك في LingoArab ونتطلع لمساعدتك في رحلة تعلم اللغة الإنجليزية.`,
+Thank you for your trust in Lingo Spanish, and we look forward to helping you on your Spanish learning journey.`,
     },
   ];
 
@@ -114,7 +114,6 @@ const PrivacyPolicy = () => {
       <Header showBack showAuthButton />
 
       <main className="container mx-auto px-4 py-12 max-w-3xl">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -125,14 +124,13 @@ const PrivacyPolicy = () => {
             <Shield className="w-8 h-8 text-primary" />
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            سياسة الخصوصية
+            Privacy Policy
           </h1>
           <p className="text-muted-foreground text-lg">
-            نلتزم بحماية خصوصيتك وبياناتك الشخصية
+            We are committed to protecting your privacy and personal data
           </p>
         </motion.div>
 
-        {/* Sections */}
         <div className="space-y-8">
           {sections.map((section, index) => (
             <motion.section
@@ -163,7 +161,6 @@ const PrivacyPolicy = () => {
           ))}
         </div>
 
-        {/* Back to top */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -174,7 +171,7 @@ const PrivacyPolicy = () => {
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="text-primary hover:underline text-sm"
           >
-            ↑ العودة للأعلى
+            ↑ Back to Top
           </button>
         </motion.div>
       </main>
