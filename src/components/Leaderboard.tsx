@@ -12,9 +12,9 @@ type TimeFrame = 'all_time' | 'weekly' | 'monthly';
 type LeaderboardType = 'global' | 'local' | 'level';
 
 const timeFrameLabels: Record<TimeFrame, string> = {
-  all_time: 'كل الأوقات',
-  weekly: 'هذا الأسبوع',
-  monthly: 'هذا الشهر'
+  all_time: 'All Time',
+  weekly: 'This Week',
+  monthly: 'This Month'
 };
 
 const courseLevels = ['A1', 'A2', 'B1', 'B2'];
@@ -40,7 +40,7 @@ export const Leaderboard = () => {
       <CardHeader className="pb-4">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <CardTitle className="flex items-center gap-2 text-xl">
-            🏆 لوحة المتصدرين
+            🏆 Leaderboard
           </CardTitle>
           
           <Select value={timeFrame} onValueChange={(v) => setTimeFrame(v as TimeFrame)}>
@@ -58,7 +58,7 @@ export const Leaderboard = () => {
         {/* User's rank */}
         {userRank && (
           <div className="mt-2 text-sm text-muted-foreground">
-            ترتيبك: <span className="font-bold text-primary">#{userRank}</span>
+            Your rank: <span className="font-bold text-primary">#{userRank}</span>
           </div>
         )}
       </CardHeader>
@@ -68,15 +68,15 @@ export const Leaderboard = () => {
           <TabsList className="grid w-full grid-cols-3 mb-4">
             <TabsTrigger value="global" className="flex items-center gap-1.5">
               <Globe className="w-4 h-4" />
-              <span className="hidden sm:inline">عالمي</span>
+              <span className="hidden sm:inline">Global</span>
             </TabsTrigger>
             <TabsTrigger value="local" className="flex items-center gap-1.5">
               <MapPin className="w-4 h-4" />
-              <span className="hidden sm:inline">محلي</span>
+              <span className="hidden sm:inline">Local</span>
             </TabsTrigger>
             <TabsTrigger value="level" className="flex items-center gap-1.5">
               <BookOpen className="w-4 h-4" />
-              <span className="hidden sm:inline">المستوى</span>
+              <span className="hidden sm:inline">Level</span>
             </TabsTrigger>
           </TabsList>
 
@@ -116,7 +116,7 @@ export const Leaderboard = () => {
 
               {leaderboard?.length === 0 && (
                 <div className="text-center py-12 text-muted-foreground">
-                  لا توجد بيانات متاحة
+                  No data available
                 </div>
               )}
             </div>

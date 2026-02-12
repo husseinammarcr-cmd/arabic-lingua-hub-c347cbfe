@@ -14,13 +14,13 @@ export const ChallengesList = () => {
     try {
       await joinChallenge.mutateAsync(challengeId);
       toast({
-        title: "تم الانضمام!",
-        description: "تم الانضمام للتحدي بنجاح",
+        title: "Joined!",
+        description: "Successfully joined the challenge",
       });
     } catch (error) {
       toast({
-        title: "خطأ",
-        description: "حدث خطأ أثناء الانضمام للتحدي",
+        title: "Error",
+        description: "An error occurred while joining the challenge",
         variant: "destructive",
       });
     }
@@ -51,14 +51,14 @@ export const ChallengesList = () => {
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          🎯 التحديات
+          🎯 Challenges
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Daily Challenges */}
         {dailyChallenges.length > 0 && (
           <div className="space-y-3">
-            <h3 className="text-sm font-medium text-muted-foreground">تحديات يومية</h3>
+            <h3 className="text-sm font-medium text-muted-foreground">Daily Challenges</h3>
             {dailyChallenges.map(challenge => (
               <ChallengeCard
                 key={challenge.id}
@@ -74,7 +74,7 @@ export const ChallengesList = () => {
         {/* Weekly Challenges */}
         {weeklyChallenges.length > 0 && (
           <div className="space-y-3">
-            <h3 className="text-sm font-medium text-muted-foreground">تحديات أسبوعية</h3>
+            <h3 className="text-sm font-medium text-muted-foreground">Weekly Challenges</h3>
             {weeklyChallenges.map(challenge => (
               <ChallengeCard
                 key={challenge.id}
@@ -90,7 +90,7 @@ export const ChallengesList = () => {
         {/* Monthly Challenges */}
         {monthlyChallenges.length > 0 && (
           <div className="space-y-3">
-            <h3 className="text-sm font-medium text-muted-foreground">تحديات شهرية</h3>
+            <h3 className="text-sm font-medium text-muted-foreground">Monthly Challenges</h3>
             {monthlyChallenges.map(challenge => (
               <ChallengeCard
                 key={challenge.id}
@@ -105,7 +105,7 @@ export const ChallengesList = () => {
 
         {challenges?.length === 0 && (
           <div className="text-center py-8 text-muted-foreground">
-            لا توجد تحديات متاحة حالياً
+            No challenges available at the moment
           </div>
         )}
       </CardContent>

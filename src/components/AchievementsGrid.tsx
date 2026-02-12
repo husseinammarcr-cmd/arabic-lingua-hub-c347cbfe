@@ -28,7 +28,7 @@ export const AchievementsGrid = () => {
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           <span className="flex items-center gap-2">
-            🏅 الإنجازات
+            🏅 Achievements
           </span>
           <span className="text-sm font-normal text-muted-foreground">
             {earnedCount} / {totalCount}
@@ -53,7 +53,7 @@ export const AchievementsGrid = () => {
 
         {achievements?.length === 0 && (
           <div className="text-center py-8 text-muted-foreground">
-            لا توجد إنجازات متاحة حالياً
+            No achievements available at the moment
           </div>
         )}
       </CardContent>

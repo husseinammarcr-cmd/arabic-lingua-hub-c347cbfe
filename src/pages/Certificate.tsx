@@ -34,46 +34,39 @@ const Certificate = () => {
           <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
             <Award className="w-10 h-10 text-primary" />
           </div>
-          <h1 className="text-3xl font-bold mb-2">شهادة LingoArab</h1>
+          <h1 className="text-3xl font-bold mb-2">Lingo Spanish Certificate</h1>
           <p className="text-muted-foreground">
-            احصل على شهادة معتمدة عند إكمال المستوى C2
+            Get a certified certificate upon completing the C2 level
           </p>
         </div>
 
-        {/* Certificate Request Card */}
         <CertificateRequestCard />
 
-        {/* Verification Link */}
         <Card className="mt-6">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-lg">
               <ShieldCheck className="w-5 h-5" />
-              التحقق من الشهادات
+              Verify Certificates
             </CardTitle>
             <CardDescription>
-              يمكنك التحقق من صحة أي شهادة صادرة من LingoArab
+              You can verify the authenticity of any certificate issued by Lingo Spanish
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Button variant="outline" asChild className="w-full">
               <Link to="/verify-certificate">
-                <ShieldCheck className="w-4 h-4 ml-2" />
-                التحقق من شهادة
+                <ShieldCheck className="w-4 h-4 mr-2" />
+                Verify a Certificate
               </Link>
             </Button>
           </CardContent>
         </Card>
 
-        {/* Info Section */}
         <div className="mt-8 text-center text-sm text-muted-foreground space-y-2">
+          <p>Lingo Spanish certificates are certified and registered in our electronic system.</p>
           <p>
-            شهادات LingoArab معتمدة ومسجلة في نظامنا الإلكتروني.
-          </p>
-          <p>
-            للاستفسارات، تواصل معنا عبر صفحة{' '}
-            <Link to="/contact" className="text-primary hover:underline">
-              التواصل
-            </Link>
+            For enquiries, contact us via the{' '}
+            <Link to="/contact" className="text-primary hover:underline">Contact</Link> page
           </p>
         </div>
       </main>
