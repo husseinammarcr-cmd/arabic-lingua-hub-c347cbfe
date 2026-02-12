@@ -1,0 +1,13 @@
+project_id = "qrbrilfuchxojsofzqwm"
+
+[functions.detect-country]
+verify_jwt = false
+
+[functions.send-verification-email]
+verify_jwt = false
+
+[functions.send-password-reset]
+verify_jwt = false
+
+[functions.send-contact-reply]
+verify_jwt = false
