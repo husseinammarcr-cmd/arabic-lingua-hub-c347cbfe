@@ -2,7 +2,7 @@ import React, { forwardRef, useMemo, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, Award, CheckCircle2 } from 'lucide-react';
+import { ChevronRight, Award, CheckCircle2 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import PageBackground from '@/components/PageBackground';
 import Header from '@/components/Header';
@@ -11,8 +11,7 @@ import { LazyThreeBackground } from '@/components/animations/LazyThreeBackground
 import { LazyLottieAnimation } from '@/components/animations/LazyLottieAnimation';
 import SplashScreen from '@/components/SplashScreen';
 
-
-const SITE_URL = 'https://lingoarab.com';
+const SITE_URL = 'https://lingospanish.com';
 
 // Import feature illustrations
 import featureLessons from '@/assets/feature-lessons.png';
@@ -25,13 +24,13 @@ import { LottieAnimation } from '@/components/animations/LottieAnimation';
 interface FeatureCardProps {
   image?: string;
   lottieData?: object;
-  titleAr: string;
-  titleEn: string;
+  title: string;
+  subtitle: string;
   delay: number;
 }
 
 const FeatureCard = forwardRef<HTMLDivElement, FeatureCardProps>(
-  ({ image, lottieData, titleAr, titleEn, delay }, ref) => (
+  ({ image, lottieData, title, subtitle, delay }, ref) => (
     <motion.div 
       ref={ref}
       initial={{ opacity: 0, y: 30 }}
@@ -41,13 +40,11 @@ const FeatureCard = forwardRef<HTMLDivElement, FeatureCardProps>(
       whileHover={{ y: -4 }}
       className="group bg-card/50 backdrop-blur-[2px] border border-border/50 rounded-2xl overflow-hidden hover:shadow-lg transition-shadow duration-300"
     >
-      {/* Card content */}
       <div className="p-6 pb-0">
-        <h3 className="text-xl font-bold text-foreground mb-1">{titleAr}</h3>
-        <p className="text-sm text-muted-foreground ltr-text">{titleEn}</p>
+        <h3 className="text-xl font-bold text-foreground mb-1">{title}</h3>
+        <p className="text-sm text-muted-foreground">{subtitle}</p>
       </div>
       
-      {/* Illustration container */}
       <div className="h-48 md:h-56 flex items-end justify-center overflow-hidden">
         {lottieData ? (
           <LazyLottieAnimation 
@@ -60,7 +57,7 @@ const FeatureCard = forwardRef<HTMLDivElement, FeatureCardProps>(
         ) : (
           <img 
             src={image} 
-            alt={`${titleEn} - ${titleAr} - ميزة تعليمية في LingoArab`}
+            alt={`${title} - Learning feature on LingoSpanish`}
             loading="lazy"
             width={176}
             height={176}
@@ -78,7 +75,6 @@ const Index = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [showSplash, setShowSplash] = useState(() => {
-    // Check if user has already seen splash in this session
     const hasSeenSplash = sessionStorage.getItem('hasSeenSplash');
     return !hasSeenSplash;
   });
@@ -91,41 +87,40 @@ const Index = () => {
   const features = [
     { 
       image: featureLessons, 
-      titleAr: 'دروس تفاعلية', 
-      titleEn: 'Interactive Lessons' 
+      title: 'Interactive Lessons', 
+      subtitle: 'Learn Spanish step by step' 
     },
     { 
       image: featureXp, 
-      titleAr: 'اكسب نقاط XP', 
-      titleEn: 'Earn XP Points' 
+      title: 'Earn XP Points', 
+      subtitle: 'Track your progress' 
     },
     { 
       lottieData: streakAnimation, 
-      titleAr: 'سلسلة يومية', 
-      titleEn: 'Daily Streaks' 
+      title: 'Daily Streaks', 
+      subtitle: 'Build consistent habits' 
     },
     { 
       lottieData: trophyAnimation, 
-      titleAr: 'شهادة مجانية', 
-      titleEn: 'Free Certificate' 
+      title: 'Free Certificate', 
+      subtitle: 'Prove your skills' 
     },
   ];
 
-  // JSON-LD Schemas
   const organizationSchema = useMemo(() => ({
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "Lingo Arab",
+    "name": "Lingo Spanish",
     "url": SITE_URL,
     "logo": `${SITE_URL}/logo.png`,
-    "description": "منصة لتعلم اللغة الإنجليزية للناطقين بالعربية"
+    "description": "A platform to learn Spanish for English speakers"
   }), []);
 
   const websiteSchema = useMemo(() => ({
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "Lingo Arab",
-    "alternateName": "LingoArab",
+    "name": "Lingo Spanish",
+    "alternateName": "LingoSpanish",
     "url": SITE_URL,
     "potentialAction": {
       "@type": "SearchAction",
@@ -142,48 +137,42 @@ const Index = () => {
       {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
       <PageBackground>
       <Helmet>
-        <title>Lingo Arab – تعلم الإنجليزية مجانا</title>
-        <meta name="description" content="تعلم اللغة الإنجليزية بطريقة ممتعة وفعّالة مع LingoArab. دروس تفاعلية، تمارين متنوعة، وتتبع تقدمك يومياً. مصممة خصيصاً للناطقين بالعربية." />
+        <title>Lingo Spanish – Learn Spanish for Free</title>
+        <meta name="description" content="Learn Spanish in a fun and effective way with LingoSpanish. Interactive lessons, diverse exercises, and daily progress tracking. Designed for English speakers." />
         <link rel="canonical" href={SITE_URL} />
         
-        {/* OpenGraph */}
-        <meta property="og:title" content="Lingo Arab – تعلم الإنجليزية مجانا" />
-        <meta property="og:description" content="منصة تعليمية مصممة خصيصاً للناطقين بالعربية. دروس تفاعلية، تمارين متنوعة، وتتبع تقدمك يومياً." />
+        <meta property="og:title" content="Lingo Spanish – Learn Spanish for Free" />
+        <meta property="og:description" content="An interactive platform designed for English speakers. Interactive lessons, diverse exercises, and daily progress tracking." />
         <meta property="og:url" content={SITE_URL} />
         <meta property="og:type" content="website" />
         <meta property="og:image" content={`${SITE_URL}/og-image.png`} />
-        <meta property="og:site_name" content="Lingo Arab" />
-        <meta property="og:locale" content="ar_SA" />
+        <meta property="og:site_name" content="Lingo Spanish" />
+        <meta property="og:locale" content="en_GB" />
         
-        {/* Twitter Cards */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Lingo Arab – تعلم الإنجليزية مجانا" />
-        <meta name="twitter:description" content="منصة تعليمية مصممة خصيصاً للناطقين بالعربية. دروس تفاعلية، تمارين متنوعة، وتتبع تقدمك يومياً." />
+        <meta name="twitter:title" content="Lingo Spanish – Learn Spanish for Free" />
+        <meta name="twitter:description" content="An interactive platform designed for English speakers. Interactive lessons, diverse exercises, and daily progress tracking." />
         <meta name="twitter:image" content={`${SITE_URL}/og-image.png`} />
         
-        {/* JSON-LD Schemas */}
         <script type="application/ld+json">{JSON.stringify(organizationSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(websiteSchema)}</script>
       </Helmet>
-      {/* 3D Particles Background - Lazy loaded for better LCP */}
       <LazyThreeBackground variant="particles" intensity="medium" loadDelay={2000} />
       
-      <div dir="rtl" className="relative z-10">
-        {/* Header */}
+      <div className="relative z-10">
         <Header showAuthButton />
 
         {/* Hero Section */}
         <section className="container mx-auto px-4 py-12 md:py-20 text-center">
           <div className="max-w-3xl mx-auto">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight animate-slide-up">
-              تعلّم الإنجليزية
-              <span className="block text-primary mt-2">بطريقة ممتعة وفعّالة</span>
+              Learn Spanish
+              <span className="block text-primary mt-2">the Fun & Effective Way</span>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground mb-4 max-w-2xl mx-auto animate-slide-up" style={{ animationDelay: '100ms' }}>
-              منصة تعليمية مصممة خصيصاً للناطقين بالعربية. دروس تفاعلية، تمارين متنوعة، وتتبع تقدمك يومياً.
+              An interactive platform designed for English speakers. Step-by-step lessons, diverse exercises, and daily progress tracking.
             </p>
             
-            {/* Lottie Orange Skating Animation */}
             <div className="flex justify-center mb-4 animate-slide-up" style={{ animationDelay: '150ms' }}>
               <LottieAnimation 
                 animationData={orangeSkating}
@@ -200,8 +189,8 @@ const Index = () => {
                 onClick={() => navigate(user ? '/app/courses' : '/auth')}
                 className="text-lg shadow-lg hover:shadow-xl"
               >
-                {user ? 'تابع التعلم' : 'ابدأ مجاناً'}
-                <ChevronLeft className="w-5 h-5" />
+                {user ? 'Continue Learning' : 'Start for Free'}
+                <ChevronRight className="w-5 h-5" />
               </Button>
               <Button 
                 variant="outline" 
@@ -209,7 +198,7 @@ const Index = () => {
                 onClick={() => navigate(user ? '/placement-test' : '/auth?returnUrl=/placement-test')}
                 className="text-lg border-2"
               >
-                اختبار تحديد المستوى
+                Placement Test
               </Button>
             </div>
           </div>
@@ -219,13 +208,12 @@ const Index = () => {
         <section className="container mx-auto px-4 py-12 md:py-16">
           <div className="text-center mb-10">
             <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
-              لماذا LingoArab؟
+              Why LingoSpanish?
             </h2>
             <p className="text-muted-foreground">
-              اكتشف مميزات التعلم معنا
+              Discover the benefits of learning with us
             </p>
           </div>
-
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             {features.map((feature, index) => (
@@ -233,8 +221,8 @@ const Index = () => {
                 key={index}
                 image={feature.image}
                 lottieData={feature.lottieData}
-                titleAr={feature.titleAr}
-                titleEn={feature.titleEn}
+                title={feature.title}
+                subtitle={feature.subtitle}
                 delay={index * 100}
               />
             ))}
@@ -250,41 +238,37 @@ const Index = () => {
             transition={{ duration: 0.5 }}
             className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-amber-500 via-amber-400 to-yellow-500 p-6 md:p-8 shadow-lg"
           >
-            {/* Decorative elements */}
             <div className="absolute top-0 left-0 w-32 h-32 bg-white/10 rounded-full -translate-x-1/2 -translate-y-1/2" />
             <div className="absolute bottom-0 right-0 w-24 h-24 bg-white/10 rounded-full translate-x-1/2 translate-y-1/2" />
             
             <div className="relative flex flex-col md:flex-row items-center gap-6">
-              {/* Icon */}
               <div className="flex-shrink-0 w-20 h-20 md:w-24 md:h-24 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
                 <Award className="w-10 h-10 md:w-12 md:h-12 text-white" />
               </div>
               
-              {/* Content */}
-              <div className="flex-1 text-center md:text-right">
+              <div className="flex-1 text-center md:text-left">
                 <h3 className="text-xl md:text-2xl font-bold text-white mb-2">
-                  احصل على شهادة مجانية! 🎓
+                  Get a Free Certificate! 🎓
                 </h3>
                 <p className="text-white/90 mb-4 max-w-xl">
-                  عند إكمالك لمستوى C2، ستحصل على شهادة إتقان اللغة الإنجليزية معتمدة برمز تحقق فريد
+                  Upon completing level C2, you'll receive a Spanish proficiency certificate with a unique verification code
                 </p>
                 <div className="flex flex-wrap justify-center md:justify-start gap-4 text-sm text-white/80">
                   <span className="flex items-center gap-1">
                     <CheckCircle2 className="w-4 h-4" />
-                    شهادة رسمية
+                    Official Certificate
                   </span>
                   <span className="flex items-center gap-1">
                     <CheckCircle2 className="w-4 h-4" />
-                    رمز تحقق فريد
+                    Unique Verification Code
                   </span>
                   <span className="flex items-center gap-1">
                     <CheckCircle2 className="w-4 h-4" />
-                    مجانية بالكامل
+                    Completely Free
                   </span>
                 </div>
               </div>
               
-              {/* CTA Button */}
               <div className="flex-shrink-0">
                 <Button 
                   variant="secondary"
@@ -292,8 +276,8 @@ const Index = () => {
                   onClick={() => navigate(user ? '/app/courses' : '/auth')}
                   className="bg-white text-amber-600 hover:bg-white/90 shadow-md"
                 >
-                  {user ? 'تابع التعلم' : 'ابدأ الآن'}
-                  <ChevronLeft className="w-4 h-4" />
+                  {user ? 'Continue Learning' : 'Start Now'}
+                  <ChevronRight className="w-4 h-4" />
                 </Button>
               </div>
             </div>
@@ -303,16 +287,15 @@ const Index = () => {
         {/* CTA Section */}
         <section className="container mx-auto px-4 py-12 md:py-16">
           <div className="relative bg-gradient-to-br from-primary to-[hsl(180_70%_45%)] rounded-3xl overflow-hidden shadow-elevated">
-            {/* Decorative elements */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
             <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2" />
             
             <div className="relative p-8 md:p-12 text-center">
               <h3 className="text-2xl md:text-3xl font-bold text-primary-foreground mb-4">
-                انضم إلى آلاف المتعلمين
+                Join Thousands of Learners
               </h3>
               <p className="text-lg text-primary-foreground/90 mb-8 max-w-xl mx-auto">
-                ابدأ رحلتك في تعلم الإنجليزية اليوم واكتشف طريقة ممتعة وفعّالة للتعلم
+                Start your Spanish learning journey today and discover a fun and effective way to learn
               </p>
               <Button 
                 variant="accent" 
@@ -320,7 +303,7 @@ const Index = () => {
                 onClick={() => navigate(user ? '/app/courses' : '/auth')}
                 className="shadow-lg hover:shadow-xl"
               >
-                {user ? 'تابع التعلم' : 'سجّل الآن مجاناً'}
+                {user ? 'Continue Learning' : 'Sign Up for Free'}
               </Button>
             </div>
           </div>
@@ -332,51 +315,24 @@ const Index = () => {
             <div className="flex flex-col md:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-4">
                 <p className="text-muted-foreground">
-                  © {new Date().getFullYear()} LingoArab. جميع الحقوق محفوظة.
+                  © {new Date().getFullYear()} LingoSpanish. All rights reserved.
                 </p>
-                <a 
-                  href="https://www.tiktok.com/@lingo.arab" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                  aria-label="تابعنا على تيك توك"
-                >
-                  <svg 
-                    viewBox="0 0 24 24" 
-                    fill="currentColor" 
-                    className="w-5 h-5"
-                  >
-                    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
-                  </svg>
-                </a>
               </div>
-              <div className="flex items-center gap-4 flex-wrap justify-center md:justify-start">
-                <a 
-                  href="/free-lessons" 
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
-                >
-                  دروس مجانية
+              <div className="flex items-center gap-4 flex-wrap justify-center md:justify-end">
+                <a href="/free-lessons" className="text-muted-foreground hover:text-primary transition-colors text-sm">
+                  Free Lessons
                 </a>
                 <span className="text-border">|</span>
-                <a 
-                  href="/privacy-policy" 
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
-                >
-                  سياسة الخصوصية
+                <a href="/privacy-policy" className="text-muted-foreground hover:text-primary transition-colors text-sm">
+                  Privacy Policy
                 </a>
                 <span className="text-border">|</span>
-                <a 
-                  href="/terms" 
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
-                >
-                  شروط الاستخدام
+                <a href="/terms" className="text-muted-foreground hover:text-primary transition-colors text-sm">
+                  Terms of Use
                 </a>
                 <span className="text-border">|</span>
-                <a 
-                  href="/cookie-policy" 
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
-                >
-                  سياسة ملفات الارتباط
+                <a href="/cookie-policy" className="text-muted-foreground hover:text-primary transition-colors text-sm">
+                  Cookie Policy
                 </a>
               </div>
             </div>
